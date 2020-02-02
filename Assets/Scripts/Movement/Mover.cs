@@ -11,20 +11,15 @@ namespace RPG.Movement
     {
         NavMeshAgent myAgent;
         ActionScheduler actionScheduler;
-        // Start is called before the first frame update
+
         void Start()
         {
             myAgent = GetComponent<NavMeshAgent>();
             actionScheduler = GetComponent<ActionScheduler>();
         }
 
-        // Update is called once per frame
         void Update()
         {
-            //if(Input.GetMouseButton(0))
-            //{
-            //    MoveToCursor();  
-            //}
             updateAnimator();
         }
 
@@ -42,7 +37,6 @@ namespace RPG.Movement
         }
         public void Cancel()
         {
-            //myAgent.SetDestination(transform.position);
             myAgent.isStopped = true;
         }
         public void MoveTo(Vector3 destination)
@@ -53,10 +47,8 @@ namespace RPG.Movement
         }
         public void MoveWithinRange(Vector3 destination, float distance)
         {
-          //  myAgent.destination = destination;
             myAgent.SetDestination(destination);
             var remainingDistance = Vector3.Distance(transform.position, destination);
-            //Vector3.Distance(transform.position, destination);
             if (remainingDistance <= distance)
                 Cancel();      
             else

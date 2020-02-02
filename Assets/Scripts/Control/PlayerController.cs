@@ -36,7 +36,6 @@ namespace RPG.Control
                 {
                     var target = hit.transform.GetComponent<CombatTarget>();
                     if (target == null) continue;
-                    print("target Aquired");
                     myFighter.Attack(target);
                     isThereTargetToAttack = true;
                 }
@@ -52,10 +51,8 @@ namespace RPG.Control
             {
                 myMover.StartMoveAction(hit.point);
                 isThereValidPlaceToGo = true;
-                print("moving...");
             }
             return isThereValidPlaceToGo;
-          //  Debug.DrawRay(ray.origin, ray.direction * 100);
         }
 
         private static Ray GetMauseRey()
