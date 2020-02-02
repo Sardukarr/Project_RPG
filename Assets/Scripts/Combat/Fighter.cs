@@ -20,6 +20,7 @@ namespace RPG.Combat
         Health target;
         private ActionScheduler actionScheduler;
         private Mover mover;
+        //TODO:: animation has to be for comercial use
         private Animator animator;
 
         private void Start()
