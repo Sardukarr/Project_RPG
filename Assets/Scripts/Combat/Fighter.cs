@@ -1,7 +1,5 @@
 ﻿using RPG.Core;
 using RPG.Movement;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace RPG.Combat
@@ -15,13 +13,16 @@ namespace RPG.Combat
         [SerializeField] float weaponDamage = 5f;
         [SerializeField] float timeBetweenAttacks = 1f;
 
+
         private float  TimeSinceLastAttack = 0f;
 
-        Health target;
+        private Health target;
         private ActionScheduler actionScheduler;
         private Mover mover;
         //TODO:: animation has to be for comercial use
         private Animator animator;
+
+
 
         private void Start()
         {
@@ -34,7 +35,7 @@ namespace RPG.Combat
             TimeSinceLastAttack += Time.deltaTime;
             if (!canAttack()) return;
                //  mover.MoveWithinRange(target.position, weaponRange);
-                if (GetIsInRange())
+                if (IsInRange())
                 {
                     AttackBehavior();
                     mover.Cancel();
@@ -57,11 +58,11 @@ namespace RPG.Combat
             }
         }
 
-        private bool GetIsInRange()
+        private bool IsInRange()
         {
-            return Vector3.Distance(transform.position, target.transform.position) <= weaponRange;
+            return target != null && (Vector3.Distance(transform.position, target.transform.position) <= weaponRange);
         }
-        public void Attack(CombatTarget combatTarget)
+        public void Attack(GameObject combatTarget)
         {
             actionScheduler.StartAction(this);
             target = combatTarget.GetComponent<Health>() ;
@@ -71,7 +72,7 @@ namespace RPG.Combat
         {
             return target != null && !target.IsDead();
         }
-        public bool canAttack(CombatTarget combatTarget)
+        public bool CanAttack(GameObject combatTarget)
         {
             return combatTarget != null && 
                     combatTarget.GetComponent<Health>()!=null &&
@@ -85,7 +86,7 @@ namespace RPG.Combat
         //Animation Event
          private void Hit ()
         {
-            if(target!=null)
+            if(target!=null & IsInRange())
                 target.TakeDamage(weaponDamage);
         }
     }

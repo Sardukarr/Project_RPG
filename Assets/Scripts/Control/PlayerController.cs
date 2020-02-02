@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using RPG.Movement;
 using RPG.Combat;
-using System;
+using RPG.Core;
 
 namespace RPG.Control
 { 
@@ -11,14 +9,18 @@ namespace RPG.Control
     {
         Mover myMover;
         Fighter myFighter;
+        private Health myHealth;
+
         void Start()
         {
             myMover = GetComponent<Mover>();
             myFighter = GetComponent<Fighter>();
+            myHealth = GetComponent<Health>();
         }
     
         void Update()
         {
+            if (myHealth.IsDead()) return;
             if (Input.GetMouseButton(0))
             {
                 if (InteractWithCombat()) return;
@@ -35,8 +37,9 @@ namespace RPG.Control
                 foreach (var hit in hits)
                 {
                     var target = hit.transform.GetComponent<CombatTarget>();
-                if (!myFighter.canAttack(target)) continue;
-                    myFighter.Attack(target);
+                if (target == null) continue;
+                if (!myFighter.CanAttack(target.gameObject)) continue;
+                    myFighter.Attack(target.gameObject);
                     isThereTargetToAttack = true;
                 }
           if(!isThereTargetToAttack)

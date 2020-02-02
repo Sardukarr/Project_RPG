@@ -26,6 +26,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8933665102aacc7408064d1e77a90187, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2051765527203485949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 645625376395979828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 348af5ca58ed68f439d799d41312cc0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chaseDistance: 5
 --- !u!1001 &2257671710333714636
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -110,6 +123,11 @@ PrefabInstance:
         type: 3}
       propertyPath: healthPoints
       value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2606169272951012280, guid: 0e0a4aa5ae01e1b4c859c277690dbe4a,
+        type: 3}
+      propertyPath: m_Speed
+      value: 2.66
       objectReference: {fileID: 0}
     - target: {fileID: 2606169272951012281, guid: 0e0a4aa5ae01e1b4c859c277690dbe4a,
         type: 3}
