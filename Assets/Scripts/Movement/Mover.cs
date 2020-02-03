@@ -9,9 +9,11 @@ namespace RPG.Movement
 {
     public class Mover : MonoBehaviour, iAction
     {
+        [SerializeField] float maxSpeed=6f;
         NavMeshAgent myAgent;
         ActionScheduler actionScheduler;
         Health myHealth;
+
 
         void Start()
         {
@@ -33,18 +35,19 @@ namespace RPG.Movement
             float speed = localVelocity.z;
             GetComponent<Animator>().SetFloat("forwardSpeed", speed);
         }
-        public void StartMoveAction(Vector3 destination)
+        public void StartMoveAction(Vector3 destination, float speedFraction)
         {
             actionScheduler.StartAction(this);
-            MoveTo(destination);
+            MoveTo(destination, speedFraction);
         }
         public void Cancel()
         {
             myAgent.isStopped = true;
         }
-        public void MoveTo(Vector3 destination)
+        public void MoveTo(Vector3 destination, float speedFraction)
         {
             myAgent.isStopped = false;
+            myAgent.speed = maxSpeed * Mathf.Clamp01(speedFraction);
             myAgent.destination = destination;
 
         }

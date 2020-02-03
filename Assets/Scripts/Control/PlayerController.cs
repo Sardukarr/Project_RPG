@@ -52,7 +52,7 @@ namespace RPG.Control
             bool isThereValidPlaceToGo=false;
             if (Physics.Raycast(GetMauseRey(), out RaycastHit hit))
             {
-                myMover.StartMoveAction(hit.point);
+                myMover.StartMoveAction(hit.point,1f);
                 isThereValidPlaceToGo = true;
             }
             return isThereValidPlaceToGo;

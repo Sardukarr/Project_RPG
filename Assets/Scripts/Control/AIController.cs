@@ -3,6 +3,7 @@ using RPG.Movement;
 using RPG.Combat;
 using RPG.Core;
 using System;
+using UnityEngine.AI;
 
 namespace RPG.Control
 {
@@ -12,6 +13,7 @@ namespace RPG.Control
         [SerializeField] float SuspecionTime = 5f;
         [SerializeField] float waypointDwellTime = 5f;
         [SerializeField] float waypointTolerance = 1.2f;
+        [Range(0,1)][SerializeField] float patrolSpeedFraction = 0.2f;
         [SerializeField] PatrolPath myPatrolPath;
  
 
@@ -23,11 +25,13 @@ namespace RPG.Control
         private Fighter myFighter;
         private ActionScheduler mySchedule;
         private Health myHealth;
+      //  private NavMeshAgent myAgent;
         private int CurrentWaypointIndex=0;
 
 
 
         Vector3 guardPosition;
+        private float startSpeed;
         private void Start()
         {
             player = GameObject.FindGameObjectWithTag("Player");
@@ -35,7 +39,9 @@ namespace RPG.Control
             myHealth = GetComponent<Health>();
             myFighter = GetComponent<Fighter>();
             mySchedule = GetComponent<ActionScheduler>();
+           // myAgent = GetComponent<NavMeshAgent>();
             guardPosition = transform.position;
+         //   startSpeed = myAgent.speed;
         }
         private void Update()
         {
@@ -64,7 +70,8 @@ namespace RPG.Control
         private void GuardBehaviour()
         {
             mySchedule.CancelAction();
-            myMover.StartMoveAction(guardPosition);
+           // myAgent.speed = startSpeed;
+            myMover.StartMoveAction(guardPosition,patrolSpeedFraction);
         }
 
         private void SuspecionBehaviour()
@@ -75,12 +82,13 @@ namespace RPG.Control
         private void AttackBehaviour()
         {
             timeSincePlayerSpotted = 0;
+          //  myAgent.speed = RunToPlayerSpeed;
             myFighter.Attack(player);
         }
 
         private void PatrolBehaviour()
         {
-            
+        //    myAgent.speed = startSpeed;
             if (AtWaypoint())
             {
                 timeSinceArrivedOnWaypoint = 0;
@@ -88,7 +96,7 @@ namespace RPG.Control
             }
             Vector3 desiredPosition = GetCurrentWaypoint();
             if(waypointDwellTime<timeSinceArrivedOnWaypoint)
-                myMover.StartMoveAction(desiredPosition);
+                myMover.StartMoveAction(desiredPosition, patrolSpeedFraction);
 
         }
 
