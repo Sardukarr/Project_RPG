@@ -340,7 +340,7 @@ PrefabInstance:
     - target: {fileID: 178985768962339786, guid: 0f12650c5032f3b4ca80c2f5326cf0c1,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 178985768962339786, guid: 0f12650c5032f3b4ca80c2f5326cf0c1,
         type: 3}
@@ -487,7 +487,7 @@ MonoBehaviour:
   SuspecionTime: 5
   waypointDwellTime: 2
   waypointTolerance: 1
-  RunToPlayerSpeed: 4.8
+  patrolSpeedFraction: 0.2
   myPatrolPath: {fileID: 803789667}
 --- !u!114 &60477956
 MonoBehaviour:
@@ -568,6 +568,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54df2600c804ee245b687a8693aa6e70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxSpeed: 6
 --- !u!95 &60477962
 Animator:
   serializedVersion: 3
@@ -1584,7 +1585,7 @@ MonoBehaviour:
   SuspecionTime: 5
   waypointDwellTime: 2
   waypointTolerance: 1
-  RunToPlayerSpeed: 3.8
+  patrolSpeedFraction: 0.2
   myPatrolPath: {fileID: 1237850176}
 --- !u!114 &284623329
 MonoBehaviour:
@@ -1665,6 +1666,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54df2600c804ee245b687a8693aa6e70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxSpeed: 6
 --- !u!95 &284623335
 Animator:
   serializedVersion: 3
@@ -1982,7 +1984,7 @@ MonoBehaviour:
   SuspecionTime: 5
   waypointDwellTime: 1
   waypointTolerance: 1.1
-  RunToPlayerSpeed: 4.1
+  patrolSpeedFraction: 0.2
   myPatrolPath: {fileID: 853627079}
 --- !u!114 &414316393
 MonoBehaviour:
@@ -2063,6 +2065,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54df2600c804ee245b687a8693aa6e70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxSpeed: 6
 --- !u!95 &414316399
 Animator:
   serializedVersion: 3
@@ -2737,7 +2740,7 @@ MonoBehaviour:
   SuspecionTime: 5
   waypointDwellTime: 1
   waypointTolerance: 1.1
-  RunToPlayerSpeed: 4.1
+  patrolSpeedFraction: 0.2
   myPatrolPath: {fileID: 851648233}
 --- !u!114 &608561166
 MonoBehaviour:
@@ -2818,6 +2821,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54df2600c804ee245b687a8693aa6e70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxSpeed: 6
 --- !u!95 &608561172
 Animator:
   serializedVersion: 3
@@ -3067,7 +3071,7 @@ MonoBehaviour:
   SuspecionTime: 6
   waypointDwellTime: 2
   waypointTolerance: 1
-  RunToPlayerSpeed: 4.5
+  patrolSpeedFraction: 0.2
   myPatrolPath: {fileID: 459056201}
 --- !u!114 &689852835
 MonoBehaviour:
@@ -3148,6 +3152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54df2600c804ee245b687a8693aa6e70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxSpeed: 6
 --- !u!95 &689852841
 Animator:
   serializedVersion: 3
@@ -3640,7 +3645,7 @@ MonoBehaviour:
   SuspecionTime: 5
   waypointDwellTime: 3
   waypointTolerance: 1.1
-  RunToPlayerSpeed: 3.5
+  patrolSpeedFraction: 0.2
   myPatrolPath: {fileID: 1383898667}
 --- !u!114 &755764012
 MonoBehaviour:
@@ -3721,6 +3726,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54df2600c804ee245b687a8693aa6e70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxSpeed: 6
 --- !u!95 &755764018
 Animator:
   serializedVersion: 3
@@ -3963,7 +3969,7 @@ MonoBehaviour:
   SuspecionTime: 5
   waypointDwellTime: 3
   waypointTolerance: 1.1
-  RunToPlayerSpeed: 3.5
+  patrolSpeedFraction: 0.2
   myPatrolPath: {fileID: 0}
 --- !u!114 &805643110
 MonoBehaviour:
@@ -4044,6 +4050,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54df2600c804ee245b687a8693aa6e70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxSpeed: 6
 --- !u!95 &805643116
 Animator:
   serializedVersion: 3
@@ -4293,7 +4300,7 @@ MonoBehaviour:
   SuspecionTime: 6
   waypointDwellTime: 2
   waypointTolerance: 1
-  RunToPlayerSpeed: 4.5
+  patrolSpeedFraction: 0.2
   myPatrolPath: {fileID: 1667890461}
 --- !u!114 &833765060
 MonoBehaviour:
@@ -4374,6 +4381,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54df2600c804ee245b687a8693aa6e70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxSpeed: 6
 --- !u!95 &833765066
 Animator:
   serializedVersion: 3
@@ -8403,7 +8411,7 @@ MonoBehaviour:
   SuspecionTime: 6
   waypointDwellTime: 2
   waypointTolerance: 1
-  RunToPlayerSpeed: 4.5
+  patrolSpeedFraction: 0.2
   myPatrolPath: {fileID: 0}
 --- !u!114 &1902201258
 MonoBehaviour:
@@ -8484,6 +8492,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54df2600c804ee245b687a8693aa6e70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxSpeed: 6
 --- !u!95 &1902201264
 Animator:
   serializedVersion: 3
@@ -9518,3 +9527,72 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1843624932}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &578341962420888571
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1327455924559550573, guid: 66715061b72b97045b66f6fbd6bb3192,
+        type: 3}
+      propertyPath: m_Name
+      value: Portal Compas
+      objectReference: {fileID: 0}
+    - target: {fileID: 6377949452594974448, guid: 66715061b72b97045b66f6fbd6bb3192,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3.13
+      objectReference: {fileID: 0}
+    - target: {fileID: 6377949452594974448, guid: 66715061b72b97045b66f6fbd6bb3192,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6377949452594974448, guid: 66715061b72b97045b66f6fbd6bb3192,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -4.37
+      objectReference: {fileID: 0}
+    - target: {fileID: 6377949452594974448, guid: 66715061b72b97045b66f6fbd6bb3192,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6377949452594974448, guid: 66715061b72b97045b66f6fbd6bb3192,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6377949452594974448, guid: 66715061b72b97045b66f6fbd6bb3192,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6377949452594974448, guid: 66715061b72b97045b66f6fbd6bb3192,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6377949452594974448, guid: 66715061b72b97045b66f6fbd6bb3192,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6377949452594974448, guid: 66715061b72b97045b66f6fbd6bb3192,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6377949452594974448, guid: 66715061b72b97045b66f6fbd6bb3192,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6377949452594974448, guid: 66715061b72b97045b66f6fbd6bb3192,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 66715061b72b97045b66f6fbd6bb3192, type: 3}
