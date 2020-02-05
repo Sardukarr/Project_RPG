@@ -6937,6 +6937,11 @@ PrefabInstance:
       propertyPath: m_ApplyRootMotion
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2393222443469288116, guid: 04da4a07c0844734782cbc205b17a39d,
+        type: 3}
+      propertyPath: uniqueIdentifier
+      value: fffa9bea-b795-445b-9621-37888cf06164
+      objectReference: {fileID: 0}
     - target: {fileID: 3709730681750109657, guid: 04da4a07c0844734782cbc205b17a39d,
         type: 3}
       propertyPath: timeBetweenAttacks
@@ -7405,6 +7410,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 2596557079186762901, guid: b4b64cfb7f6506e49bf5ef79d281b669,
+        type: 3}
+      propertyPath: uniqueIdentifier
+      value: 339b63e4-163a-4a1b-8a9d-9182a075a949
       objectReference: {fileID: 0}
     - target: {fileID: 3910568889202533368, guid: b4b64cfb7f6506e49bf5ef79d281b669,
         type: 3}

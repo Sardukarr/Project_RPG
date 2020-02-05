@@ -5,7 +5,7 @@ using UnityEngine;
 namespace RPG.Combat
 {
 
-    public class Fighter : MonoBehaviour, iAction
+    public class Fighter : MonoBehaviour, IAction
     {
 
 
@@ -33,7 +33,7 @@ namespace RPG.Combat
         private void Update()
         {
             TimeSinceLastAttack += Time.deltaTime;
-            if (!canAttack()) return;
+            if (!CanAttack()) return;
                //  mover.MoveWithinRange(target.position, weaponRange);
                 if (IsInRange())
                 {
@@ -68,7 +68,7 @@ namespace RPG.Combat
             target = combatTarget.GetComponent<Health>() ;
             
         }
-        public bool canAttack()
+        public bool CanAttack()
         {
             return target != null && !target.IsDead();
         }

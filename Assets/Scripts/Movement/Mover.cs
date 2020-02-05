@@ -1,13 +1,12 @@
 ﻿using RPG.Core;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using RPG.Saving;
+using System.Collections.Generic;
 
 namespace RPG.Movement
 {
-    public class Mover : MonoBehaviour, iAction
+    public class Mover : MonoBehaviour, IAction, ISaveable
     {
         [SerializeField] float maxSpeed=6f;
         NavMeshAgent myAgent;
@@ -25,10 +24,10 @@ namespace RPG.Movement
         void Update()
         {
             myAgent.enabled = !myHealth.IsDead();
-            updateAnimator();
+            UpdateAnimator();
         }
 
-        private void updateAnimator()
+        private void UpdateAnimator()
         {
             Vector3 velocity = myAgent.velocity;
             Vector3 localVelocity = transform.InverseTransformDirection(velocity);
@@ -62,6 +61,22 @@ namespace RPG.Movement
                 myAgent.isStopped = false;
             }
 
+        }
+
+        public object CaptureState()
+        {
+            Dictionary<string, object> data = new Dictionary<string, object>();
+            data["position"] = new SerializableVector3(transform.position);
+            data["rotation"] = new SerializableVector3(transform.eulerAngles);
+            return data;
+        }
+
+        public void RestoreState(object state)
+        {
+            var data = (Dictionary<string, object>)state;
+            GetComponent<NavMeshAgent>().enabled = false;
+            transform.position = ((SerializableVector3)data["position"]).ToVector();
+            GetComponent<NavMeshAgent>().enabled = true;
         }
     }
 
