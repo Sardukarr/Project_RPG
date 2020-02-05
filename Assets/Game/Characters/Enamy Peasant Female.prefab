@@ -1,0 +1,172 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &3246186319799972145
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 645625376395979816, guid: 04da4a07c0844734782cbc205b17a39d,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 645625376395979816, guid: 04da4a07c0844734782cbc205b17a39d,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 645625376395979816, guid: 04da4a07c0844734782cbc205b17a39d,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 645625376395979816, guid: 04da4a07c0844734782cbc205b17a39d,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 645625376395979816, guid: 04da4a07c0844734782cbc205b17a39d,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 645625376395979816, guid: 04da4a07c0844734782cbc205b17a39d,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 645625376395979816, guid: 04da4a07c0844734782cbc205b17a39d,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 645625376395979816, guid: 04da4a07c0844734782cbc205b17a39d,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 645625376395979816, guid: 04da4a07c0844734782cbc205b17a39d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 645625376395979816, guid: 04da4a07c0844734782cbc205b17a39d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 645625376395979816, guid: 04da4a07c0844734782cbc205b17a39d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 645625376395979828, guid: 04da4a07c0844734782cbc205b17a39d,
+        type: 3}
+      propertyPath: m_Name
+      value: Enamy Peasant Female
+      objectReference: {fileID: 0}
+    - target: {fileID: 2023718988128302554, guid: 04da4a07c0844734782cbc205b17a39d,
+        type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: acd8283a962e1df42ae5aa36b8c7d109, type: 3}
+    - target: {fileID: 3709730681750109657, guid: 04da4a07c0844734782cbc205b17a39d,
+        type: 3}
+      propertyPath: leftHandTransform
+      value: 
+      objectReference: {fileID: 4627742177998736150}
+    - target: {fileID: 3709730681750109657, guid: 04da4a07c0844734782cbc205b17a39d,
+        type: 3}
+      propertyPath: rightHandTransform
+      value: 
+      objectReference: {fileID: 4627870134300308602}
+    - target: {fileID: 4058828788343737734, guid: 04da4a07c0844734782cbc205b17a39d,
+        type: 3}
+      propertyPath: healthPoints
+      value: 3
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 04da4a07c0844734782cbc205b17a39d, type: 3}
+--- !u!4 &2736356347647335705 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 645625376395979816, guid: 04da4a07c0844734782cbc205b17a39d,
+    type: 3}
+  m_PrefabInstance: {fileID: 3246186319799972145}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &4623341446449796992
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2736356347647335705}
+    m_Modifications:
+    - target: {fileID: 1999711273916728, guid: d57a606738b9f614e80cd96095127f1a, type: 3}
+      propertyPath: m_Name
+      value: PT_Medieval_Female_Peasant_01_a
+      objectReference: {fileID: 0}
+    - target: {fileID: 4493982234606912, guid: d57a606738b9f614e80cd96095127f1a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4493982234606912, guid: d57a606738b9f614e80cd96095127f1a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4493982234606912, guid: d57a606738b9f614e80cd96095127f1a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4493982234606912, guid: d57a606738b9f614e80cd96095127f1a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4493982234606912, guid: d57a606738b9f614e80cd96095127f1a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4493982234606912, guid: d57a606738b9f614e80cd96095127f1a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4493982234606912, guid: d57a606738b9f614e80cd96095127f1a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4493982234606912, guid: d57a606738b9f614e80cd96095127f1a, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4493982234606912, guid: d57a606738b9f614e80cd96095127f1a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4493982234606912, guid: d57a606738b9f614e80cd96095127f1a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4493982234606912, guid: d57a606738b9f614e80cd96095127f1a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 95690236839158292, guid: d57a606738b9f614e80cd96095127f1a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 95690236839158292, guid: d57a606738b9f614e80cd96095127f1a, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: d57a606738b9f614e80cd96095127f1a, type: 3}
+--- !u!4 &4627742177998736150 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4611838059617430, guid: d57a606738b9f614e80cd96095127f1a,
+    type: 3}
+  m_PrefabInstance: {fileID: 4623341446449796992}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4627870134300308602 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4529793884283898, guid: d57a606738b9f614e80cd96095127f1a,
+    type: 3}
+  m_PrefabInstance: {fileID: 4623341446449796992}
+  m_PrefabAsset: {fileID: 0}

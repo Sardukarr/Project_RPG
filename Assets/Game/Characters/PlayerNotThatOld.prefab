@@ -1,5 +1,21 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!54 &7331673460569411912
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 993893718144987669}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!136 &998625118
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -359,6 +375,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ffa08167d28cfd24dba0151a4c80f384, type: 3}
+--- !u!4 &2508739199150719628 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4670999009163842, guid: ffa08167d28cfd24dba0151a4c80f384,
+    type: 3}
+  m_PrefabInstance: {fileID: 2504086320626137294}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2507970670225071210 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4036533242356900, guid: ffa08167d28cfd24dba0151a4c80f384,
+    type: 3}
+  m_PrefabInstance: {fileID: 2504086320626137294}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4396064496219099202
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -381,6 +409,45 @@ PrefabInstance:
       propertyPath: weaponDamage
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 812007967410156474, guid: 0e0a4aa5ae01e1b4c859c277690dbe4a,
+        type: 3}
+      propertyPath: handTransform
+      value: 
+      objectReference: {fileID: 2507970670225071210}
+    - target: {fileID: 812007967410156474, guid: 0e0a4aa5ae01e1b4c859c277690dbe4a,
+        type: 3}
+      propertyPath: currentWeapon
+      value: 
+      objectReference: {fileID: 8858083077663842698, guid: 768b200636051aa4a839267dce25f9d1,
+        type: 3}
+    - target: {fileID: 812007967410156474, guid: 0e0a4aa5ae01e1b4c859c277690dbe4a,
+        type: 3}
+      propertyPath: weaponOverride
+      value: 
+      objectReference: {fileID: 22100000, guid: 7220a0125102a6440a74049246a90a30,
+        type: 2}
+    - target: {fileID: 812007967410156474, guid: 0e0a4aa5ae01e1b4c859c277690dbe4a,
+        type: 3}
+      propertyPath: weapon
+      value: 
+      objectReference: {fileID: 11400000, guid: 0742fdd104d4dca43a03594c4f15335a,
+        type: 2}
+    - target: {fileID: 812007967410156474, guid: 0e0a4aa5ae01e1b4c859c277690dbe4a,
+        type: 3}
+      propertyPath: defaultWeapon
+      value: 
+      objectReference: {fileID: 11400000, guid: baaf8e1e3d0a5444ea8d84e92f18efa8,
+        type: 2}
+    - target: {fileID: 812007967410156474, guid: 0e0a4aa5ae01e1b4c859c277690dbe4a,
+        type: 3}
+      propertyPath: rightHandTransform
+      value: 
+      objectReference: {fileID: 2507970670225071210}
+    - target: {fileID: 812007967410156474, guid: 0e0a4aa5ae01e1b4c859c277690dbe4a,
+        type: 3}
+      propertyPath: leftHandTransform
+      value: 
+      objectReference: {fileID: 2508739199150719628}
     - target: {fileID: 1804016789268167895, guid: 0e0a4aa5ae01e1b4c859c277690dbe4a,
         type: 3}
       propertyPath: uniqueIdentifier

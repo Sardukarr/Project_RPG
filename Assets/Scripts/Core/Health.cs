@@ -8,7 +8,10 @@ namespace RPG.Core
 
         [SerializeField] float healthPoints = 100f;
         public bool alreadyDead = false;
-
+        public void Start()
+        {
+        //    GetComponent<Animator>().ResetTrigger("resurect");
+        }
         public bool IsDead()
         {
             return alreadyDead;
@@ -26,7 +29,7 @@ namespace RPG.Core
 
         private void Die()
         {
-            if (alreadyDead) return;
+           // if (alreadyDead) return;
             GetComponent<Animator>().SetTrigger("die");
             GetComponent<ActionScheduler>().CancelAction();
             alreadyDead = true;
@@ -56,12 +59,14 @@ namespace RPG.Core
            
             if (healthPoints > 0)
             {
-                if(alreadyDead)
+                if (GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Death"))
                     GetComponent<Animator>().SetTrigger("resurect");
-                alreadyDead = false;
+            
+
             }
             else
                 Die();
+           // GetComponent<Animator>().ResetTrigger("resurect");
         }
 
     }

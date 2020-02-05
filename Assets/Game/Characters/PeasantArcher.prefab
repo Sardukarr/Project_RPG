@@ -1,0 +1,92 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &4907205076321820018
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1346153219761356114, guid: f8816ed545de4c4488a230b30c6e9288,
+        type: 3}
+      propertyPath: defaultWeapon
+      value: 
+      objectReference: {fileID: 11400000, guid: 28160e757845681458d47c9ae2215f77,
+        type: 2}
+    - target: {fileID: 2963469181682838691, guid: f8816ed545de4c4488a230b30c6e9288,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2963469181682838691, guid: f8816ed545de4c4488a230b30c6e9288,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2963469181682838691, guid: f8816ed545de4c4488a230b30c6e9288,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 26.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 2963469181682838691, guid: f8816ed545de4c4488a230b30c6e9288,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2963469181682838691, guid: f8816ed545de4c4488a230b30c6e9288,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2963469181682838691, guid: f8816ed545de4c4488a230b30c6e9288,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2963469181682838691, guid: f8816ed545de4c4488a230b30c6e9288,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2963469181682838691, guid: f8816ed545de4c4488a230b30c6e9288,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2963469181682838691, guid: f8816ed545de4c4488a230b30c6e9288,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2963469181682838691, guid: f8816ed545de4c4488a230b30c6e9288,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2963469181682838691, guid: f8816ed545de4c4488a230b30c6e9288,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2963469181682838719, guid: f8816ed545de4c4488a230b30c6e9288,
+        type: 3}
+      propertyPath: m_Name
+      value: PeasantArcher
+      objectReference: {fileID: 0}
+    - target: {fileID: 4444127862224689270, guid: f8816ed545de4c4488a230b30c6e9288,
+        type: 3}
+      propertyPath: myPatrolPath
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4444127862224689270, guid: f8816ed545de4c4488a230b30c6e9288,
+        type: 3}
+      propertyPath: SuspecionTime
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4444127862224689270, guid: f8816ed545de4c4488a230b30c6e9288,
+        type: 3}
+      propertyPath: chaseDistance
+      value: 20
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f8816ed545de4c4488a230b30c6e9288, type: 3}

@@ -1,5 +1,6 @@
 ﻿using RPG.Core;
 using RPG.Movement;
+using System;
 using UnityEngine;
 
 namespace RPG.Combat
@@ -8,11 +9,9 @@ namespace RPG.Combat
     public class Fighter : MonoBehaviour, IAction
     {
 
-
-        [SerializeField] float weaponRange = 1f;
-        [SerializeField] float weaponDamage = 5f;
-        [SerializeField] float timeBetweenAttacks = 1f;
-
+        [SerializeField] Transform rightHandTransform = null;
+        [SerializeField] Transform leftHandTransform = null;
+        [SerializeField] Weapon defaultWeapon = null;
 
         private float  TimeSinceLastAttack = 0f;
 
@@ -22,14 +21,18 @@ namespace RPG.Combat
         //TODO:: animation has to be for comercial use
         private Animator animator;
 
-
+        Weapon currentWeapon=null;
 
         private void Start()
         {
             actionScheduler = GetComponent<ActionScheduler>();
             mover = GetComponent<Mover>();
             animator = GetComponent<Animator>();
+            EquipWeapon(defaultWeapon);
         }
+
+
+
         private void Update()
         {
             TimeSinceLastAttack += Time.deltaTime;
@@ -46,11 +49,17 @@ namespace RPG.Combat
                 }
             
         }
+        public void EquipWeapon(Weapon weapon)
+        {
+            if (weapon == null) return;
+            currentWeapon = weapon;
+            weapon.Spawn(rightHandTransform, leftHandTransform, GetComponent<Animator>());
 
+        }
         private void AttackBehavior()
         {
             transform.LookAt(target.transform);
-        if (TimeSinceLastAttack >= timeBetweenAttacks && !target.IsDead())
+        if (TimeSinceLastAttack >= currentWeapon.TimeBetweenAttacks && !target.IsDead())
             {
                 animator.ResetTrigger("stopAttack");
                 animator.SetTrigger("attack");
@@ -60,7 +69,7 @@ namespace RPG.Combat
 
         private bool IsInRange()
         {
-            return target != null && (Vector3.Distance(transform.position, target.transform.position) <= weaponRange);
+            return target != null && (Vector3.Distance(transform.position, target.transform.position) <= currentWeapon.Range);
         }
         public void Attack(GameObject combatTarget)
         {
@@ -84,11 +93,18 @@ namespace RPG.Combat
             mover.Cancel();
             target = null;
         }
-        //Animation Event
+        //Animation Events
          private void Hit ()
         {
             if(target!=null & IsInRange())
-                target.TakeDamage(weaponDamage);
+                target.TakeDamage(currentWeapon.Damage);
+        }
+        private void Shoot ()
+        {
+            if (target == null || !IsInRange()) return;
+
+            currentWeapon.LaunchProjectile(rightHandTransform,leftHandTransform,target);
+            //Hit();
         }
     }
 
