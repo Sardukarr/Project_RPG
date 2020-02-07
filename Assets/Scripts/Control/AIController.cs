@@ -34,7 +34,7 @@ namespace RPG.Control
         private float startSpeed;
         private void Start()
         {
-            player = GameObject.FindGameObjectWithTag("Player");
+            player = GameObject.FindGameObjectWithTag(Config.playerTag);
             myMover = GetComponent<Mover>();
             myHealth = GetComponent<Health>();
             myFighter = GetComponent<Fighter>();

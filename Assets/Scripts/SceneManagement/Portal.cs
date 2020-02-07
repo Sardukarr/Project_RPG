@@ -1,4 +1,5 @@
 ﻿
+using RPG.Core;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
@@ -23,7 +24,7 @@ namespace RPG.SceneManagement
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.tag == "Player")
+            if (other.CompareTag(Config.playerTag))
             {
                 StartCoroutine(Transition());
             }
@@ -62,7 +63,7 @@ namespace RPG.SceneManagement
 
         private void UpdatePlayer(Portal otherPortal)
         {
-            GameObject player = GameObject.FindWithTag("Player");
+            GameObject player = GameObject.FindWithTag(Config.playerTag);
             player.GetComponent<NavMeshAgent>().enabled = false;
             player.transform.position = otherPortal.spawnPoint.position;
             player.transform.rotation = otherPortal.spawnPoint.rotation;

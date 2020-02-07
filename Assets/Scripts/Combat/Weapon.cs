@@ -1,4 +1,5 @@
 ﻿using RPG.Core;
+using System;
 using UnityEngine;
 
 namespace RPG.Combat
@@ -13,6 +14,7 @@ namespace RPG.Combat
         [SerializeField] float timeBetweenAttacks = 1f;
         [SerializeField] bool isRightHanded = true;
         [SerializeField] Projectile projectile = null;
+        [SerializeField] bool homing = false;
 
         public float TimeBetweenAttacks { get => timeBetweenAttacks; set => timeBetweenAttacks = value; }
         public float Damage { get => damage; set => damage = value; }
@@ -20,18 +22,41 @@ namespace RPG.Combat
 
         public void Spawn(Transform rightHand, Transform leftHand, Animator animator)
         {
-
+            DestroyOldWeapon(rightHand, leftHand);
             if (equippedPrefab != null)
             {
                 Transform handTransform = GetTransform(rightHand, leftHand);
-                Instantiate(equippedPrefab, handTransform);
+                //handTransform = GetTransform(rightHand, leftHand);
+                GameObject weapon = Instantiate(equippedPrefab, handTransform);
+                weapon.name = Config.weaponName;
             }
+            // magic to override back to default when new weapon has no ovveride controler 
+            //(it would use last weapon animation if not set properly)
+            var overrideController = animator.runtimeAnimatorController as AnimatorOverrideController;
             if (AnimatorOverride != null)
                 animator.runtimeAnimatorController = AnimatorOverride;
+            else if (overrideController != null)
+            {
+                animator.runtimeAnimatorController = overrideController.runtimeAnimatorController;
+            }
+        }
+
+        private void DestroyOldWeapon(Transform rightHand, Transform leftHand)
+        {
+            Transform oldOne = rightHand.Find(Config.weaponName);
+            if (oldOne ==null)
+                oldOne = leftHand.Find(Config.weaponName);
+            if (oldOne == null) return;
+            oldOne.name = "DESTROYING"; // prevent destroing new pickup
+            Destroy(oldOne.gameObject);
         }
 
         private Transform GetTransform(Transform rightHand, Transform leftHand)
         {
+            // ToDO how to archer not kill himself!
+           // Vector3 test = isRightHanded ? rightHand.position + (rightHand.forward) : leftHand.position + (leftHand.forward);
+             //   test = test + test.
+
             return isRightHanded ? rightHand : leftHand;
         }
 
@@ -42,8 +67,14 @@ namespace RPG.Combat
 
         public void LaunchProjectile(Transform rightHand, Transform leftHand, Health target)
         {
-            Projectile projectileInstance = Instantiate(projectile, GetTransform(rightHand, leftHand).position, Quaternion.identity);
-            projectileInstance.SetTarget(target,damage);
+            // 1.5f magic distance when arrow dont hit archer
+            Transform ProjectileStartPoint = GetTransform(rightHand, leftHand);
+            // ProjectileStartPoint is in fact a hand transform, comes as an reference
+           // ProjectileStartPoint.position -= ProjectileStartPoint.right/8f;
+            Projectile projectileInstance = Instantiate(projectile, ProjectileStartPoint.position- ProjectileStartPoint.right / 8f, Quaternion.identity);
+            projectileInstance.SetTarget(target,damage, homing);
         }
+
+        
     }
 }
