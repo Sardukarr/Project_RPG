@@ -7,9 +7,7 @@ namespace RPG.Control
     public class PatrolPath : MonoBehaviour
     {
         private void OnDrawGizmos()
-        {
-            var waypoints = GetComponentsInChildren<Transform>();
-            
+        {            
             for(int i=0;i<transform.childCount ;i++)
             //foreach (var waypoint in waypoints)
             {

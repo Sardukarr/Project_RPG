@@ -5,7 +5,7 @@ namespace RPG.Core
 {
     public class PersistentObjects : MonoBehaviour
     {
-        [SerializeField] GameObject persistentObjectPrefab;
+        [SerializeField] GameObject persistentObjectPrefab = null;
 
         static bool hasSpawned = false;
         private void Awake()

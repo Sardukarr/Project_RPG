@@ -1,10 +1,10 @@
 ﻿using RPG.Core;
-using System;
+using RPG.Resources;
 using UnityEngine;
 
 namespace RPG.Combat
 {
-    [CreateAssetMenu(fileName ="Weapon",menuName ="Weapons/Make New Weapon",order =0)]
+    [CreateAssetMenu(fileName ="Weapon",menuName ="Weapons/Make New Weapon",order =1)]
   public class Weapon : ScriptableObject
     {
         [SerializeField] GameObject equippedPrefab = null;
@@ -65,14 +65,14 @@ namespace RPG.Combat
             return projectile != null;
         }
 
-        public void LaunchProjectile(Transform rightHand, Transform leftHand, Health target)
+        public void LaunchProjectile(Transform rightHand, Transform leftHand, Health target, GameObject instigator)
         {
             // 1.5f magic distance when arrow dont hit archer
             Transform ProjectileStartPoint = GetTransform(rightHand, leftHand);
             // ProjectileStartPoint is in fact a hand transform, comes as an reference
            // ProjectileStartPoint.position -= ProjectileStartPoint.right/8f;
             Projectile projectileInstance = Instantiate(projectile, ProjectileStartPoint.position- ProjectileStartPoint.right / 8f, Quaternion.identity);
-            projectileInstance.SetTarget(target,damage, homing);
+            projectileInstance.SetTarget(target, instigator, damage, homing);
         }
 
         

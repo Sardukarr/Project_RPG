@@ -1,6 +1,4 @@
-﻿using RPG.Core;
-using System.Collections;
-using System.Collections.Generic;
+﻿using RPG.Resources;
 using UnityEngine;
 
 namespace RPG.Combat
@@ -15,6 +13,7 @@ namespace RPG.Combat
         [SerializeField] float lifeAfterImpact = 0.05f;
 
         bool homing = false;
+        GameObject instigator=null;
         // Update is called once per frame
         void Update()
         {
@@ -25,11 +24,12 @@ namespace RPG.Combat
             transform.Translate(Vector3.forward * speed * Time.deltaTime);
         }
 
-        public void SetTarget(Health target,float WeaponDamage, bool homing=false)
+        public void SetTarget(Health target,GameObject whoShoot, float WeaponDamage, bool homing=false)
         {
             this.target = target;
             this.damage += WeaponDamage;
             this.homing = homing;
+            instigator = whoShoot;
             transform.LookAt(target.transform.position);
         }
         //for target that has capsule, and pivot near ground
@@ -48,7 +48,7 @@ namespace RPG.Combat
             //   if (ColiderHealth != target) return;
                 if (!ColiderHealth.IsDead())
                 {
-                ColiderHealth.TakeDamage(damage); // targer.takedamage
+                ColiderHealth.TakeDamage(instigator,damage); // targer.takedamage
                 }
                 else return;
             }

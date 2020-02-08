@@ -1,7 +1,7 @@
 ﻿using RPG.Core;
 using RPG.Movement;
+using RPG.Resources;
 using RPG.Saving;
-using System;
 using UnityEngine;
 
 namespace RPG.Combat
@@ -33,8 +33,8 @@ namespace RPG.Combat
             // name of resources has to be unique to make this work ( multiple resources folder)
             // Weapon weapon = Resources.Load<Weapon>(defaultWeaponName);
             //  EquipWeapon(weapon);
-          //  if(currentWeapon == null)
-             //   EquipWeapon(defaultWeapon);
+            if(currentWeapon == null)
+                EquipWeapon(defaultWeapon);
         }
 
 
@@ -92,6 +92,12 @@ namespace RPG.Combat
                     combatTarget.GetComponent<Health>()!=null &&
                     !combatTarget.GetComponent<Health>().IsDead();
         }
+
+        public Health GetTarget()
+        {
+            return target;
+        }
+
         public void Cancel()
         {
             animator.SetTrigger("stopAttack");
@@ -104,13 +110,13 @@ namespace RPG.Combat
             if (currentWeapon.HasProjectile())
                 Shoot();
             else if (target!=null & IsInRange())
-                target.TakeDamage(currentWeapon.Damage);
+                target.TakeDamage(gameObject, currentWeapon.Damage);
         }
         private void Shoot ()
         {
             if (target == null || !IsInRange()) return;
 
-            currentWeapon.LaunchProjectile(rightHandTransform,leftHandTransform,target);
+            currentWeapon.LaunchProjectile(rightHandTransform, leftHandTransform, target, gameObject);
             //Hit();
         }
 
@@ -124,7 +130,7 @@ namespace RPG.Combat
         public void RestoreState(object state)
         {
             //string WeaponName =(string) state;
-            Weapon weapon = Resources.Load<Weapon>((string)state);
+            Weapon weapon = UnityEngine.Resources.Load<Weapon>((string)state);
             EquipWeapon(weapon);
         }
     }

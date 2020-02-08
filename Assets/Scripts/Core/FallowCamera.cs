@@ -6,7 +6,7 @@ namespace RPG.Core
 {
     public class FallowCamera : MonoBehaviour
     {
-        [SerializeField] Transform target;
+        [SerializeField] Transform target=null;
 
         void LateUpdate()
         {

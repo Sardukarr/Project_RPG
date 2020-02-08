@@ -15,9 +15,9 @@ namespace RPG.SceneManagement
         }
 
         [SerializeField] int sceneToLoad = -1;
-        [SerializeField] Transform spawnPoint;
+        [SerializeField] Transform spawnPoint = null;
         //TODO refactor: change name to location - destination is different from location of the portal
-        [SerializeField] DestinationIdentifier destination;
+        [SerializeField] DestinationIdentifier destination = DestinationIdentifier.north;
         [SerializeField] float fadeOutTime = 1f;
         [SerializeField] float fadeInTime = 2f;
         [SerializeField] float fadeWaitTime = 0.5f;

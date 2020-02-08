@@ -2,8 +2,7 @@
 using RPG.Movement;
 using RPG.Combat;
 using RPG.Core;
-using System;
-using UnityEngine.AI;
+using RPG.Resources;
 
 namespace RPG.Control
 {
@@ -14,11 +13,11 @@ namespace RPG.Control
         [SerializeField] float waypointDwellTime = 5f;
         [SerializeField] float waypointTolerance = 1.2f;
         [Range(0,1)][SerializeField] float patrolSpeedFraction = 0.2f;
-        [SerializeField] PatrolPath myPatrolPath;
- 
+        [SerializeField] PatrolPath myPatrolPath=null;
 
-        float timeSincePlayerSpotted= Mathf.Infinity;
-        float timeSinceArrivedOnWaypoint = Mathf.Infinity;
+
+        private float timeSincePlayerSpotted = Mathf.Infinity;
+        private float timeSinceArrivedOnWaypoint = Mathf.Infinity;
 
         private GameObject player;
         private Mover myMover;
@@ -31,7 +30,6 @@ namespace RPG.Control
 
 
         Vector3 guardPosition;
-        private float startSpeed;
         private void Start()
         {
             player = GameObject.FindGameObjectWithTag(Config.playerTag);

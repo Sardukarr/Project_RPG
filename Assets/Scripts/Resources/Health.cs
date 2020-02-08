@@ -1,7 +1,9 @@
-﻿using RPG.Saving;
+﻿using RPG.Core;
+using RPG.Saving;
+using RPG.Stats;
 using UnityEngine;
 
-namespace RPG.Core
+namespace RPG.Resources
 {
     public class Health : MonoBehaviour, ISaveable
     {
@@ -10,7 +12,8 @@ namespace RPG.Core
         public bool alreadyDead = false;
         public void Start()
         {
-        //    GetComponent<Animator>().ResetTrigger("resurect");
+            //    GetComponent<Animator>().ResetTrigger("resurect");
+            healthPoints = GetComponent<BaseStats>().GetStat(Stat.HP);
         }
         public bool IsDead()
         {
@@ -18,23 +21,32 @@ namespace RPG.Core
         }
         // public bool AlreadyDead { get => alreadyDead; private set => alreadyDead = value; }
 
-        public void TakeDamage(float damage)
+        public void TakeDamage(GameObject instigator ,float damage)
         {
             healthPoints = Mathf.Max(healthPoints - damage, 0);
             if (healthPoints == 0 && !alreadyDead)
             {
-                Die();
+                Die(instigator);
+            }
+            else
+            {
+                //GetComponent<Animator>().st
+                GetComponent<Animator>().SetTrigger("getHit");
             }
         }
-
-        private void Die()
+        public float GetPercent()
         {
-           // if (alreadyDead) return;
+            return 100*healthPoints / GetComponent<BaseStats>().GetStat(Stat.HP);
+        }
+        private void Die(GameObject instigator)
+        {
+            // if (alreadyDead) return;
             GetComponent<Animator>().SetTrigger("die");
             GetComponent<ActionScheduler>().CancelAction();
             alreadyDead = true;
+            if(instigator!=null)
+                instigator.GetComponent<Experience>().AwardExp(GetComponent<BaseStats>().GetStat(Stat.XPReward));
         }
-
         [System.Serializable]
         struct HealthSaveData
         {
@@ -42,7 +54,7 @@ namespace RPG.Core
             public bool alreadyDead;
         }
 
-
+         
         public object CaptureState()
         {
             HealthSaveData data = new HealthSaveData();
@@ -65,7 +77,7 @@ namespace RPG.Core
 
             }
             else
-                Die();
+                Die(null);
            // GetComponent<Animator>().ResetTrigger("resurect");
         }
 

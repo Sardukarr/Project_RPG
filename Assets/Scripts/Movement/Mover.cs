@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using RPG.Saving;
 using System.Collections.Generic;
+using RPG.Resources;
 
 namespace RPG.Movement
 {
@@ -77,6 +78,15 @@ namespace RPG.Movement
             GetComponent<NavMeshAgent>().enabled = false;
             transform.position = ((SerializableVector3)data["position"]).ToVector();
             GetComponent<NavMeshAgent>().enabled = true;
+        }
+
+        private void FootL()
+        {
+
+        }
+        private void FootR()
+        {
+
         }
     }
 
