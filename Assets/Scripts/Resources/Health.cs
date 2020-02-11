@@ -1,6 +1,7 @@
 ﻿using RPG.Core;
 using RPG.Saving;
 using RPG.Stats;
+using System;
 using UnityEngine;
 
 namespace RPG.Resources
@@ -8,13 +9,31 @@ namespace RPG.Resources
     public class Health : MonoBehaviour, ISaveable
     {
 
-        [SerializeField] float healthPoints = 100f;
+        float healthPoints = -1f;
+        float maxHealthPoints = -1f;
         public bool alreadyDead = false;
+        BaseStats baseStats;
+
         public void Start()
         {
+            baseStats = GetComponent<BaseStats>();
             //    GetComponent<Animator>().ResetTrigger("resurect");
-            healthPoints = GetComponent<BaseStats>().GetStat(Stat.HP);
+            maxHealthPoints = baseStats.GetStat(Stat.HP);
+            if (healthPoints < 0f)
+            {
+                healthPoints = maxHealthPoints;
+            }
+
+            GetComponent<BaseStats>().onLevelUp += HealOnLevelUp;
         }
+
+        private void HealOnLevelUp()
+        {
+            var NewMaxHp = baseStats.GetStat(Stat.HP);
+            healthPoints += Mathf.Clamp(NewMaxHp-maxHealthPoints, healthPoints,maxHealthPoints);
+            maxHealthPoints = NewMaxHp;
+        }
+
         public bool IsDead()
         {
             return alreadyDead;
@@ -36,7 +55,7 @@ namespace RPG.Resources
         }
         public float GetPercent()
         {
-            return 100*healthPoints / GetComponent<BaseStats>().GetStat(Stat.HP);
+            return 100*healthPoints / baseStats.GetStat(Stat.HP);
         }
         private void Die(GameObject instigator)
         {
@@ -45,7 +64,7 @@ namespace RPG.Resources
             GetComponent<ActionScheduler>().CancelAction();
             alreadyDead = true;
             if(instigator!=null)
-                instigator.GetComponent<Experience>().AwardExp(GetComponent<BaseStats>().GetStat(Stat.XPReward));
+                instigator.GetComponent<Experience>().AwardExp(baseStats.GetStat(Stat.XPReward));
         }
         [System.Serializable]
         struct HealthSaveData

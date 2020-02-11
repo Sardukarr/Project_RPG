@@ -1,5 +1,6 @@
 ﻿using RPG.Core;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace RPG.Stats
@@ -8,24 +9,42 @@ namespace RPG.Stats
     public class Progression : ScriptableObject
     {
         [SerializeField] CharacterClass[] characterClasses = null;
-
-        public float GetStat(Stat stat, Classes CharClass, int lvl )
+        Dictionary<Classes, Dictionary<Stat, int[]>> lookupTable = null;
+        
+        
+        
+        public int GetStat(Stat stat, Classes CharClass, int lvl )
         {
+
+            Buildlookup();
+            int[] levels =  lookupTable[CharClass][stat];
+            if (levels.Length < lvl) return 1; // 
+            else return levels[lvl-1];
+        }
+
+        private void Buildlookup()
+        {
+            if (lookupTable != null) return;
+
+            lookupTable = new Dictionary<Classes, Dictionary<Stat, int[]>>();
             foreach (var progressionClass in characterClasses)
             {
-                if (progressionClass.characterClass != CharClass) continue;
+                var statLookupTable = new Dictionary<Stat, int[]>();
 
                 foreach (StatsClass progressionStat in progressionClass.stats)
                 {
-                    if (progressionStat.stat != stat) continue;
-                    if (progressionStat.levels.Length < lvl) continue;
-                    return progressionStat.levels[lvl - 1];
+                    statLookupTable[progressionStat.stat] = progressionStat.levels;
                 }
-                   
-            }
-            return 1f;
-        }
 
+                lookupTable[progressionClass.characterClass] = statLookupTable;
+            }
+        }
+        public int GetLevels(Stat stat, Classes CharClass)
+        {
+            Buildlookup();
+            int[] levels = lookupTable[CharClass][stat];
+            return levels.Length;
+        }
         [System.Serializable]
         public class CharacterClass
         {
@@ -38,7 +57,7 @@ namespace RPG.Stats
         public class StatsClass
         {
             public Stat stat;
-            public float[] levels;
+            public int[] levels;
         }
     }
 }

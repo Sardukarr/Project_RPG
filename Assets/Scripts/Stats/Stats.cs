@@ -4,5 +4,6 @@
     {
         HP,
         XPReward,
+        XPToLevelUp,  
     }
 }
