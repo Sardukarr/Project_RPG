@@ -1,8 +1,10 @@
-﻿using RPG.Core;
+﻿using GameDevTV.Utils;
+using RPG.Core;
 using RPG.Movement;
 using RPG.Resources;
 using RPG.Saving;
 using RPG.Stats;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,19 +27,28 @@ namespace RPG.Combat
         private Animator animator = null;
         private BaseStats baseStats = null;
 
-        Weapon currentWeapon=null;
+        LazyValue<Weapon> currentWeapon=null;
 
-        private void Start()
+        private void Awake()
         {
             actionScheduler = GetComponent<ActionScheduler>();
             mover = GetComponent<Mover>();
             animator = GetComponent<Animator>();
             baseStats = GetComponent<BaseStats>();
-            // name of resources has to be unique to make this work ( multiple resources folder)
-            // Weapon weapon = Resources.Load<Weapon>(defaultWeaponName);
-            //  EquipWeapon(weapon);
-            if (currentWeapon == null)
-                EquipWeapon(defaultWeapon);
+            currentWeapon = new LazyValue<Weapon>(SetupDefaultWeapon);
+
+        }
+
+        private Weapon SetupDefaultWeapon()
+        {
+            AttachWeapon(defaultWeapon);
+            return defaultWeapon;
+        }
+
+        private void Start()
+        {
+            currentWeapon.ForceInit();
+            
         }
 
 
@@ -60,16 +71,24 @@ namespace RPG.Combat
         public void EquipWeapon(Weapon weapon)
         {
             if (weapon == null) return;
-            currentWeapon = weapon;
-            weapon.Spawn(rightHandTransform, leftHandTransform, GetComponent<Animator>());
+            currentWeapon.value = weapon;
+            weapon.Spawn(rightHandTransform, leftHandTransform, animator);
             // Race condition, used in start and restore state, can not use local stashed animator
-            GetComponent<Animator>().SetFloat("attackSpeedMultiplayer", currentWeapon.GetAnimationSpeed()); 
+            animator.SetFloat("attackSpeedMultiplayer", currentWeapon.value.GetAnimationSpeed()); 
+
+        }
+        private void AttachWeapon(Weapon weapon)
+        {
+            if (weapon == null) return;
+            currentWeapon.value = weapon;
+            weapon.Spawn(rightHandTransform, leftHandTransform, animator);
+            animator.SetFloat("attackSpeedMultiplayer", currentWeapon.value.GetAnimationSpeed());
 
         }
         private void AttackBehavior()
         {
             transform.LookAt(target.transform);
-        if (TimeSinceLastAttack >= currentWeapon.TimeBetweenAttacks && !target.IsDead())
+        if (TimeSinceLastAttack >= currentWeapon.value.TimeBetweenAttacks && !target.IsDead())
             {
                 animator.ResetTrigger("stopAttack");
                 animator.SetTrigger("attack");
@@ -80,7 +99,7 @@ namespace RPG.Combat
 
         private bool IsInRange()
         {
-            return target != null && (Vector3.Distance(transform.position, target.transform.position) <= currentWeapon.Range);
+            return target != null && (Vector3.Distance(transform.position, target.transform.position) <= currentWeapon.value.Range);
         }
         public void Attack(GameObject combatTarget)
         {
@@ -113,7 +132,7 @@ namespace RPG.Combat
         //Animation Events
          private void Hit ()
         {
-            if (currentWeapon.HasProjectile())
+            if (currentWeapon.value.HasProjectile())
                 Shoot();
             else if (target != null & IsInRange())
                 //          target.TakeDamage(gameObject, currentWeapon.Damage);
@@ -123,14 +142,14 @@ namespace RPG.Combat
         {
             if (target == null || !IsInRange()) return;
 
-            currentWeapon.LaunchProjectile(rightHandTransform, leftHandTransform, target, gameObject, (float)baseStats.GetStat(Stat.BaseDmg)); //+ currentWeapon.Damage);
+            currentWeapon.value.LaunchProjectile(rightHandTransform, leftHandTransform, target, gameObject, (float)baseStats.GetStat(Stat.BaseDmg)); //+ currentWeapon.Damage);
             //Hit();
         }
 
         public object CaptureState()
         {
             if (currentWeapon != null)
-                return currentWeapon.name;
+                return currentWeapon.value.name;
             else return defaultWeapon.name;
         }
 
@@ -147,7 +166,7 @@ namespace RPG.Combat
             //TODO: should dmg be int?
             if(stat == Stat.BaseDmg)
             {
-                yield return currentWeapon.Damage;
+                yield return currentWeapon.value.Damage;
             }
         }
 
@@ -155,7 +174,7 @@ namespace RPG.Combat
         {
             if (stat == Stat.BaseDmg)
             {
-                yield return currentWeapon.PercentageModifier;
+                yield return currentWeapon.value.PercentageModifier;
             }
         }
     }

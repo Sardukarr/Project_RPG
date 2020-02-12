@@ -1,4 +1,5 @@
-﻿using RPG.Core;
+﻿using GameDevTV.Utils;
+using RPG.Core;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,27 +22,48 @@ namespace RPG.Stats
         public event Action onLevelUp;
         //    [SerializeField] Stats stat;
 
-        private int currentLevel = 0;
+        private LazyValue<int> currentLevel;
+
+        //dont call external function on awake
+        private void Awake()
+        {
+            experience = GetComponent<Experience>();
+            currentLevel = new LazyValue <int> (GetInitLevel);
+        }
+
+        private int GetInitLevel()
+        {
+           return CalculateLevel();
+        }
 
         private void Start()
         {
-            currentLevel = CalculateLevel();
-            experience = GetComponent<Experience>();
-            if (experience != null)
-                experience.onExperienceGained += UpdateLevel;
+            //currentLevel = CalculateLevel();
+            currentLevel.ForceInit();
+           
         }
 
         private void UpdateLevel()
         {
             int newLevel = CalculateLevel();
-            if(newLevel>currentLevel)
+            if(newLevel>currentLevel.value)
             {
-                currentLevel = newLevel;
+                currentLevel.value = newLevel;
                 LevelUpEffect();
                 onLevelUp();
             }
         }
-
+        // good practice to subscribe to delegates in onEnable (awake< here < start
+        private void OnEnable()
+        {
+            if (experience != null)
+                experience.onExperienceGained += UpdateLevel;
+        }
+        private void OnDisable()
+        {
+            if (experience != null)
+                experience.onExperienceGained -= UpdateLevel;
+        }
         private void LevelUpEffect()
         {
             Instantiate(levelUpParticle, transform);
@@ -52,18 +74,15 @@ namespace RPG.Stats
             return (GetBaseStat(stat) + GetAdditiveModifier(stat)) * (1+GetPercentageModifier(stat)/100);
         }
 
-
-
         public int GetLevel()
         {
-            if (currentLevel < 1)
-                currentLevel = CalculateLevel();
-            return currentLevel;
+            return currentLevel.value;
         }
         public int CalculateLevel()
         {
+            //TODO: could be experience from awake?
             experience = GetComponent<Experience>();
-            if (experience == null) return currentLevel;
+            if (experience == null) return currentLevel.value;
 
             int currentXP = experience.GetXP();
             int maxLevel = (int)progression.GetLevels(Stat.XPToLevelUp, characterClass);

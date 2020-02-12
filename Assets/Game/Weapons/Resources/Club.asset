@@ -14,11 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   equippedPrefab: {fileID: 4058620696701758620, guid: f10b8faf546d7c847bd3511124b8ebaf,
     type: 3}
-  AnimatorOverride: {fileID: 22100000, guid: 7220a0125102a6440a74049246a90a30, type: 2}
+  AnimatorOverride: {fileID: 22100000, guid: 2d7c5df354512a244ab3754d1b35e026, type: 2}
   range: 1.2
   damage: 3
-  timeBetweenAttacks: 2.5
+  percentageModifier: 15
+  timeBetweenAttacks: 2.2
   isRightHanded: 1
   projectile: {fileID: 0}
   homing: 0
-  animationSpeed: 0.6
+  animationSpeed: 0.65

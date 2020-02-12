@@ -3,6 +3,8 @@ using RPG.Movement;
 using RPG.Combat;
 using RPG.Core;
 using RPG.Resources;
+using GameDevTV.Utils;
+using System;
 
 namespace RPG.Control
 {
@@ -26,19 +28,28 @@ namespace RPG.Control
         private Health myHealth;
       //  private NavMeshAgent myAgent;
         private int CurrentWaypointIndex=0;
-
-
-
-        Vector3 guardPosition;
-        private void Start()
+        LazyValue<Vector3> guardPosition;
+        private void Awake()
         {
             player = GameObject.FindGameObjectWithTag(Config.playerTag);
             myMover = GetComponent<Mover>();
             myHealth = GetComponent<Health>();
             myFighter = GetComponent<Fighter>();
             mySchedule = GetComponent<ActionScheduler>();
+
+            guardPosition = new LazyValue<Vector3>(GetGuardPosition);
+        }
+
+        private Vector3 GetGuardPosition()
+        {
+            return transform.position;
+        }
+
+        private void Start()
+        {
+            guardPosition.ForceInit();
            // myAgent = GetComponent<NavMeshAgent>();
-            guardPosition = transform.position;
+          //  guardPosition = transform.position;
          //   startSpeed = myAgent.speed;
         }
         private void Update()
@@ -69,7 +80,7 @@ namespace RPG.Control
         {
             mySchedule.CancelAction();
            // myAgent.speed = startSpeed;
-            myMover.StartMoveAction(guardPosition,patrolSpeedFraction);
+            myMover.StartMoveAction(guardPosition.value,patrolSpeedFraction);
         }
 
         private void SuspecionBehaviour()
