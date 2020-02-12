@@ -22,3 +22,4 @@ MonoBehaviour:
   projectile: {fileID: 2450114399350727616, guid: c1cf423fc089a7c448e368e70bb60906,
     type: 3}
   homing: 0
+  animationSpeed: 0.5

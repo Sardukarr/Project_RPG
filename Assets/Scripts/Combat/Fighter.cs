@@ -2,12 +2,14 @@
 using RPG.Movement;
 using RPG.Resources;
 using RPG.Saving;
+using RPG.Stats;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace RPG.Combat
 {
 
-    public class Fighter : MonoBehaviour, IAction , ISaveable
+    public class Fighter : MonoBehaviour, IAction , ISaveable, IModifierProvider
     {
 
         [SerializeField] Transform rightHandTransform = null;
@@ -16,11 +18,12 @@ namespace RPG.Combat
        // [SerializeField] string defaultWeaponName = "Unarmed";
         private float  TimeSinceLastAttack = 0f;
 
-        private Health target;
-        private ActionScheduler actionScheduler;
-        private Mover mover;
+        private Health target = null;
+        private ActionScheduler actionScheduler = null;
+        private Mover mover = null;
         //TODO:: animation has to be for comercial use
-        private Animator animator;
+        private Animator animator = null;
+        private BaseStats baseStats = null;
 
         Weapon currentWeapon=null;
 
@@ -29,11 +32,11 @@ namespace RPG.Combat
             actionScheduler = GetComponent<ActionScheduler>();
             mover = GetComponent<Mover>();
             animator = GetComponent<Animator>();
-
+            baseStats = GetComponent<BaseStats>();
             // name of resources has to be unique to make this work ( multiple resources folder)
             // Weapon weapon = Resources.Load<Weapon>(defaultWeaponName);
             //  EquipWeapon(weapon);
-            if(currentWeapon == null)
+            if (currentWeapon == null)
                 EquipWeapon(defaultWeapon);
         }
 
@@ -59,6 +62,8 @@ namespace RPG.Combat
             if (weapon == null) return;
             currentWeapon = weapon;
             weapon.Spawn(rightHandTransform, leftHandTransform, GetComponent<Animator>());
+            // Race condition, used in start and restore state, can not use local stashed animator
+            GetComponent<Animator>().SetFloat("attackSpeedMultiplayer", currentWeapon.GetAnimationSpeed()); 
 
         }
         private void AttackBehavior()
@@ -68,6 +73,7 @@ namespace RPG.Combat
             {
                 animator.ResetTrigger("stopAttack");
                 animator.SetTrigger("attack");
+              //  animator.speed = currentWeapon.GetAnimationSpeed();
                 TimeSinceLastAttack = 0f;
             }
         }
@@ -109,14 +115,15 @@ namespace RPG.Combat
         {
             if (currentWeapon.HasProjectile())
                 Shoot();
-            else if (target!=null & IsInRange())
-                target.TakeDamage(gameObject, currentWeapon.Damage);
+            else if (target != null & IsInRange())
+                //          target.TakeDamage(gameObject, currentWeapon.Damage);
+                target.TakeDamage(gameObject, (float)baseStats.GetStat(Stat.BaseDmg));//+currentWeapon.Damage);
         }
         private void Shoot ()
         {
             if (target == null || !IsInRange()) return;
 
-            currentWeapon.LaunchProjectile(rightHandTransform, leftHandTransform, target, gameObject);
+            currentWeapon.LaunchProjectile(rightHandTransform, leftHandTransform, target, gameObject, (float)baseStats.GetStat(Stat.BaseDmg)); //+ currentWeapon.Damage);
             //Hit();
         }
 
@@ -133,6 +140,23 @@ namespace RPG.Combat
             Weapon weapon = UnityEngine.Resources.Load<Weapon>((string)state);
             target = null;
             EquipWeapon(weapon);
+        }
+
+        public IEnumerable<float> GetAdditiveModifier(Stat stat)
+        {
+            //TODO: should dmg be int?
+            if(stat == Stat.BaseDmg)
+            {
+                yield return currentWeapon.Damage;
+            }
+        }
+
+        public IEnumerable<float> GetPercentageModifier(Stat stat)
+        {
+            if (stat == Stat.BaseDmg)
+            {
+                yield return currentWeapon.PercentageModifier;
+            }
         }
     }
 

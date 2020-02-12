@@ -15,6 +15,9 @@ namespace RPG.Stats
         [SerializeField] GameObject levelUpParticle = null;
         Experience experience = null;
 
+        //TODO : should enamies get modifiers?
+        // [SerializeField] bool shouldGetModifiers = true;
+
         public event Action onLevelUp;
         //    [SerializeField] Stats stat;
 
@@ -44,10 +47,13 @@ namespace RPG.Stats
             Instantiate(levelUpParticle, transform);
         }
 
-        public int GetStat(Stat stat)
+        public float GetStat(Stat stat)
         {
-            return progression.GetStat(stat,characterClass,GetLevel()); 
+            return (GetBaseStat(stat) + GetAdditiveModifier(stat)) * (1+GetPercentageModifier(stat)/100);
         }
+
+
+
         public int GetLevel()
         {
             if (currentLevel < 1)
@@ -60,14 +66,44 @@ namespace RPG.Stats
             if (experience == null) return currentLevel;
 
             int currentXP = experience.GetXP();
-            int maxLevel = progression.GetLevels(Stat.XPToLevelUp, characterClass);
+            int maxLevel = (int)progression.GetLevels(Stat.XPToLevelUp, characterClass);
             for (int levels=1; levels <= maxLevel; levels++)
             {
-                var XpToLvlUp = progression.GetStat(Stat.XPToLevelUp, characterClass, levels);
+                int XpToLvlUp = (int)progression.GetStat(Stat.XPToLevelUp, characterClass, levels);
                 if (XpToLvlUp > currentXP)
                     return levels;
             }
             return maxLevel+1;
+        }
+
+        private float GetAdditiveModifier(Stat stat)
+        {
+            float total = 0;
+          foreach(var provider in GetComponents<IModifierProvider>())
+            {
+                foreach(var modifier in provider.GetAdditiveModifier(stat))
+                {
+                    total += modifier;
+                }
+            }
+            return total;
+        }
+        private float GetPercentageModifier(Stat stat)
+        {
+            float total = 0;
+            foreach (var provider in GetComponents<IModifierProvider>())
+            {
+                foreach (var modifier in provider.GetPercentageModifier(stat))
+                {
+                    total += modifier;
+                }
+            }
+            return total;
+        }
+
+        private float GetBaseStat(Stat stat)
+        {
+            return progression.GetStat(stat, characterClass, GetLevel());
         }
     }
 

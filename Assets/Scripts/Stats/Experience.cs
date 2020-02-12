@@ -30,6 +30,7 @@ namespace RPG.Stats
         public void RestoreState(object state)
         {
             XP = (int)state;
+            GetComponent<BaseStats>().CalculateLevel();
         }
     }
 }

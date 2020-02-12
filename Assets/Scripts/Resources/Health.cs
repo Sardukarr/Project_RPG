@@ -2,6 +2,7 @@
 using RPG.Saving;
 using RPG.Stats;
 using System;
+using System.Collections;
 using UnityEngine;
 
 namespace RPG.Resources
@@ -30,7 +31,10 @@ namespace RPG.Resources
         private void HealOnLevelUp()
         {
             var NewMaxHp = baseStats.GetStat(Stat.HP);
-            healthPoints += Mathf.Clamp(NewMaxHp-maxHealthPoints, healthPoints,maxHealthPoints);
+            var newhealthPoints = healthPoints + NewMaxHp-maxHealthPoints;
+           // float newhealthPoints = healthPoints+ (GetPercent()/100 * NewMaxHp);
+            healthPoints = Mathf.Clamp(newhealthPoints, healthPoints, NewMaxHp);
+
             maxHealthPoints = NewMaxHp;
         }
 
@@ -42,6 +46,7 @@ namespace RPG.Resources
 
         public void TakeDamage(GameObject instigator ,float damage)
         {
+            print(gameObject.name + "took: " + damage);
             healthPoints = Mathf.Max(healthPoints - damage, 0);
             if (healthPoints == 0 && !alreadyDead)
             {
@@ -57,6 +62,10 @@ namespace RPG.Resources
         {
             return 100*healthPoints / baseStats.GetStat(Stat.HP);
         }
+        public Tuple<float, float> GetCurrentAndMaxHealth()
+        {
+            return new Tuple<float, float>(healthPoints,maxHealthPoints);
+        }
         private void Die(GameObject instigator)
         {
             // if (alreadyDead) return;
@@ -64,7 +73,7 @@ namespace RPG.Resources
             GetComponent<ActionScheduler>().CancelAction();
             alreadyDead = true;
             if(instigator!=null)
-                instigator.GetComponent<Experience>().AwardExp(baseStats.GetStat(Stat.XPReward));
+                instigator.GetComponent<Experience>().AwardExp((int)baseStats.GetStat(Stat.XPReward));
         }
         [System.Serializable]
         struct HealthSaveData

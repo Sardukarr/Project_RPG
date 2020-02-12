@@ -11,14 +11,17 @@ namespace RPG.Combat
         [SerializeField] AnimatorOverrideController AnimatorOverride = null;
         [SerializeField] float range = 0.5f;
         [SerializeField] float damage = 1f;
+        [SerializeField] float percentageModifier = 0f;
         [SerializeField] float timeBetweenAttacks = 1f;
         [SerializeField] bool isRightHanded = true;
         [SerializeField] Projectile projectile = null;
         [SerializeField] bool homing = false;
+        [SerializeField] float animationSpeed = 1f;
 
         public float TimeBetweenAttacks { get => timeBetweenAttacks; set => timeBetweenAttacks = value; }
         public float Damage { get => damage; set => damage = value; }
         public float Range { get => range; set => range = value; }
+        public float PercentageModifier { get => percentageModifier; set => percentageModifier = value; }
 
         public void Spawn(Transform rightHand, Transform leftHand, Animator animator)
         {
@@ -65,14 +68,18 @@ namespace RPG.Combat
             return projectile != null;
         }
 
-        public void LaunchProjectile(Transform rightHand, Transform leftHand, Health target, GameObject instigator)
+        public float GetAnimationSpeed()
+        {
+            return animationSpeed;
+        }
+        public void LaunchProjectile(Transform rightHand, Transform leftHand, Health target, GameObject instigator,float CalculatedDmg)
         {
             // 1.5f magic distance when arrow dont hit archer
             Transform ProjectileStartPoint = GetTransform(rightHand, leftHand);
             // ProjectileStartPoint is in fact a hand transform, comes as an reference
            // ProjectileStartPoint.position -= ProjectileStartPoint.right/8f;
             Projectile projectileInstance = Instantiate(projectile, ProjectileStartPoint.position- ProjectileStartPoint.right / 8f, Quaternion.identity);
-            projectileInstance.SetTarget(target, instigator, damage, homing);
+            projectileInstance.SetTarget(target, instigator, CalculatedDmg, homing);
         }
 
         

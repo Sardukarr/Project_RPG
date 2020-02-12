@@ -82,11 +82,12 @@ namespace RPG.Movement
 
         private void FootL()
         {
-
+            //basicly a stepo meter
+           // print("footl");
         }
         private void FootR()
         {
-
+          //  print("footr");
         }
     }
 

@@ -20,7 +20,11 @@ namespace RPG.Resources
         {
             health = playerFighter.GetTarget();
             if (health != null)
-                GetComponent<Text>().text = String.Format("{0:0}%", health.GetPercent());
+            {
+                var values = health.GetCurrentAndMaxHealth();
+                //    GetComponent<Text>().text = String.Format("{0:0}%",health.GetPercent());
+                GetComponent<Text>().text = String.Format("{0:0}/{1}", values.Item1, values.Item2);
+            }
             else
                 GetComponent<Text>().text = "No target";
         }

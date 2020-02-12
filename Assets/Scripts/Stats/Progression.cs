@@ -9,15 +9,15 @@ namespace RPG.Stats
     public class Progression : ScriptableObject
     {
         [SerializeField] CharacterClass[] characterClasses = null;
-        Dictionary<Classes, Dictionary<Stat, int[]>> lookupTable = null;
+        Dictionary<Classes, Dictionary<Stat, float[]>> lookupTable = null;
         
         
         
-        public int GetStat(Stat stat, Classes CharClass, int lvl )
+        public float GetStat(Stat stat, Classes CharClass, int lvl )
         {
 
             Buildlookup();
-            int[] levels =  lookupTable[CharClass][stat];
+            float[] levels =  lookupTable[CharClass][stat];
             if (levels.Length < lvl) return 1; // 
             else return levels[lvl-1];
         }
@@ -26,10 +26,10 @@ namespace RPG.Stats
         {
             if (lookupTable != null) return;
 
-            lookupTable = new Dictionary<Classes, Dictionary<Stat, int[]>>();
+            lookupTable = new Dictionary<Classes, Dictionary<Stat, float[]>>();
             foreach (var progressionClass in characterClasses)
             {
-                var statLookupTable = new Dictionary<Stat, int[]>();
+                var statLookupTable = new Dictionary<Stat, float[]>();
 
                 foreach (StatsClass progressionStat in progressionClass.stats)
                 {
@@ -39,10 +39,10 @@ namespace RPG.Stats
                 lookupTable[progressionClass.characterClass] = statLookupTable;
             }
         }
-        public int GetLevels(Stat stat, Classes CharClass)
+        public float GetLevels(Stat stat, Classes CharClass)
         {
             Buildlookup();
-            int[] levels = lookupTable[CharClass][stat];
+            float[] levels = lookupTable[CharClass][stat];
             return levels.Length;
         }
         [System.Serializable]
@@ -57,7 +57,7 @@ namespace RPG.Stats
         public class StatsClass
         {
             public Stat stat;
-            public int[] levels;
+            public float[] levels;
         }
     }
 }

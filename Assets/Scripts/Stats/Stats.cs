@@ -4,6 +4,7 @@
     {
         HP,
         XPReward,
-        XPToLevelUp,  
+        XPToLevelUp,
+        BaseDmg,
     }
 }
