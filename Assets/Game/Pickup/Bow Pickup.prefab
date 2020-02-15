@@ -80,12 +80,17 @@ PrefabInstance:
     - target: {fileID: 2896596855524554142, guid: 65dd71f3cecfa3049bc4b4ac502f54b4,
         type: 3}
       propertyPath: m_Center.x
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2896596855524554142, guid: 65dd71f3cecfa3049bc4b4ac502f54b4,
         type: 3}
       propertyPath: m_Radius
-      value: 0.8
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2896596855524554142, guid: 65dd71f3cecfa3049bc4b4ac502f54b4,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6670720568860876039, guid: 65dd71f3cecfa3049bc4b4ac502f54b4,
         type: 3}
@@ -119,7 +124,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 6dbcad4863c2bfb4791e2e317db3673c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.12
+      value: 0.92
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 6dbcad4863c2bfb4791e2e317db3673c, type: 3}
       propertyPath: m_LocalPosition.y

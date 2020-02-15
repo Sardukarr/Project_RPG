@@ -1,4 +1,5 @@
 ﻿
+using RPG.Control;
 using RPG.Core;
 using System.Collections;
 using UnityEngine;
@@ -42,6 +43,9 @@ namespace RPG.SceneManagement
 
             Fader fader = FindObjectOfType<Fader>();
 
+            var player = GameObject.FindWithTag(Config.playerTag).GetComponent<PlayerController>();
+            player.enabled = false;
+
             yield return fader.FadeOut(fadeOutTime);
 
             SavingWrapper wrapper = FindObjectOfType<SavingWrapper>();
@@ -49,6 +53,8 @@ namespace RPG.SceneManagement
 
             yield return SceneManager.LoadSceneAsync(sceneToLoad);
 
+            player = GameObject.FindWithTag(Config.playerTag).GetComponent<PlayerController>();
+            player.enabled = false;
             wrapper.Load();
 
             Portal otherPortal = GetOtherPortal((DestinationIdentifier)(((int)destination + 2) % 4));
@@ -56,7 +62,9 @@ namespace RPG.SceneManagement
 
             wrapper.Save();
             yield return new WaitForSeconds(fadeWaitTime);
-            yield return fader.FadeIn(fadeInTime);
+            fader.FadeIn(fadeInTime);
+
+            player.enabled = true;
 
             Destroy(gameObject);
         }

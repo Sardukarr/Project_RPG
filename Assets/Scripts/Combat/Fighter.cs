@@ -1,7 +1,7 @@
 ﻿using GameDevTV.Utils;
 using RPG.Core;
 using RPG.Movement;
-using RPG.Resources;
+using RPG.Attributes;
 using RPG.Saving;
 using RPG.Stats;
 using System;
@@ -16,7 +16,7 @@ namespace RPG.Combat
 
         [SerializeField] Transform rightHandTransform = null;
         [SerializeField] Transform leftHandTransform = null;
-        [SerializeField] Weapon defaultWeapon = null;
+        [SerializeField] WeaponConfig defaultWeapon = null;
        // [SerializeField] string defaultWeaponName = "Unarmed";
         private float  TimeSinceLastAttack = 0f;
 
@@ -27,19 +27,19 @@ namespace RPG.Combat
         private Animator animator = null;
         private BaseStats baseStats = null;
 
-        LazyValue<Weapon> currentWeapon=null;
-
+        LazyValue<WeaponConfig> currentWeaponConfig=null;
+        Weapon currentWeapon = null;
         private void Awake()
         {
             actionScheduler = GetComponent<ActionScheduler>();
             mover = GetComponent<Mover>();
             animator = GetComponent<Animator>();
             baseStats = GetComponent<BaseStats>();
-            currentWeapon = new LazyValue<Weapon>(SetupDefaultWeapon);
+            currentWeaponConfig = new LazyValue<WeaponConfig>(SetupDefaultWeapon);
 
         }
 
-        private Weapon SetupDefaultWeapon()
+        private WeaponConfig SetupDefaultWeapon()
         {
             AttachWeapon(defaultWeapon);
             return defaultWeapon;
@@ -47,10 +47,13 @@ namespace RPG.Combat
 
         private void Start()
         {
-            currentWeapon.ForceInit();
+            currentWeaponConfig.ForceInit();
             
         }
-
+        public bool hasValidTarget()
+        {
+            return target != null && CanAttack(target.gameObject);
+        }
 
         private void Update()
         {
@@ -68,27 +71,27 @@ namespace RPG.Combat
                 }
             
         }
-        public void EquipWeapon(Weapon weapon)
+        public void EquipWeapon(WeaponConfig weapon)
         {
             if (weapon == null) return;
-            currentWeapon.value = weapon;
+            currentWeaponConfig.value = weapon;
             weapon.Spawn(rightHandTransform, leftHandTransform, animator);
             // Race condition, used in start and restore state, can not use local stashed animator
-            animator.SetFloat("attackSpeedMultiplayer", currentWeapon.value.GetAnimationSpeed()); 
+            animator.SetFloat("attackSpeedMultiplayer", currentWeaponConfig.value.GetAnimationSpeed()); 
 
         }
-        private void AttachWeapon(Weapon weapon)
+        private void AttachWeapon(WeaponConfig weapon)
         {
             if (weapon == null) return;
-            currentWeapon.value = weapon;
+            currentWeaponConfig.value = weapon;
             weapon.Spawn(rightHandTransform, leftHandTransform, animator);
-            animator.SetFloat("attackSpeedMultiplayer", currentWeapon.value.GetAnimationSpeed());
+            animator.SetFloat("attackSpeedMultiplayer", currentWeaponConfig.value.GetAnimationSpeed());
 
         }
         private void AttackBehavior()
         {
             transform.LookAt(target.transform);
-        if (TimeSinceLastAttack >= currentWeapon.value.TimeBetweenAttacks && !target.IsDead())
+        if (TimeSinceLastAttack >= currentWeaponConfig.value.TimeBetweenAttacks && !target.IsDead())
             {
                 animator.ResetTrigger("stopAttack");
                 animator.SetTrigger("attack");
@@ -99,7 +102,7 @@ namespace RPG.Combat
 
         private bool IsInRange()
         {
-            return target != null && (Vector3.Distance(transform.position, target.transform.position) <= currentWeapon.value.Range);
+            return target != null && (Vector3.Distance(transform.position, target.transform.position) <= currentWeaponConfig.value.Range);
         }
         public void Attack(GameObject combatTarget)
         {
@@ -132,7 +135,7 @@ namespace RPG.Combat
         //Animation Events
          private void Hit ()
         {
-            if (currentWeapon.value.HasProjectile())
+            if (currentWeaponConfig.value.HasProjectile())
                 Shoot();
             else if (target != null & IsInRange())
                 //          target.TakeDamage(gameObject, currentWeapon.Damage);
@@ -140,23 +143,23 @@ namespace RPG.Combat
         }
         private void Shoot ()
         {
-            if (target == null || !IsInRange()) return;
+            if (target == null) return; //|| !IsInRange()) return;
 
-            currentWeapon.value.LaunchProjectile(rightHandTransform, leftHandTransform, target, gameObject, (float)baseStats.GetStat(Stat.BaseDmg)); //+ currentWeapon.Damage);
+            currentWeaponConfig.value.LaunchProjectile(rightHandTransform, leftHandTransform, target, gameObject, (float)baseStats.GetStat(Stat.BaseDmg)); //+ currentWeapon.Damage);
             //Hit();
         }
 
         public object CaptureState()
         {
-            if (currentWeapon != null)
-                return currentWeapon.value.name;
+            if (currentWeaponConfig != null)
+                return currentWeaponConfig.value.name;
             else return defaultWeapon.name;
         }
 
         public void RestoreState(object state)
         {
             //string WeaponName =(string) state;
-            Weapon weapon = UnityEngine.Resources.Load<Weapon>((string)state);
+            WeaponConfig weapon = UnityEngine.Resources.Load<WeaponConfig>((string)state);
             target = null;
             EquipWeapon(weapon);
         }
@@ -166,7 +169,7 @@ namespace RPG.Combat
             //TODO: should dmg be int?
             if(stat == Stat.BaseDmg)
             {
-                yield return currentWeapon.value.Damage;
+                yield return currentWeaponConfig.value.Damage;
             }
         }
 
@@ -174,7 +177,7 @@ namespace RPG.Combat
         {
             if (stat == Stat.BaseDmg)
             {
-                yield return currentWeapon.value.PercentageModifier;
+                yield return currentWeaponConfig.value.PercentageModifier;
             }
         }
     }

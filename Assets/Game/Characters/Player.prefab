@@ -26,10 +26,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.3
-  m_Height: 2.3
+  m_Radius: 0.25
+  m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: -0.18, z: 0}
 --- !u!114 &114393260318329752
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42,6 +42,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c456e79c7d24c24790c53198ec76266, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cursorMappings:
+  - type: 0
+    texture: {fileID: 2800000, guid: b46c0e8558f88124b90949b499fa801f, type: 3}
+    hotspot: {x: 64, y: 64}
+  - type: 1
+    texture: {fileID: 2800000, guid: 460b8c81943825c479af7ffbd80c9e5d, type: 3}
+    hotspot: {x: 64, y: 64}
+  - type: 3
+    texture: {fileID: 2800000, guid: cc0915b0b19d78844ab3123e2a2f1701, type: 3}
+    hotspot: {x: 50, y: 0}
+  - type: 4
+    texture: {fileID: 2800000, guid: 4fee88e7ef452b146aa4add22a3da773, type: 3}
+    hotspot: {x: 50, y: 0}
+  - type: 2
+    texture: {fileID: 2800000, guid: a8a9fa33f52733a4a8c4b17941b54ec6, type: 3}
+    hotspot: {x: 0, y: 0}
+  - type: 5
+    texture: {fileID: 2800000, guid: 88a3efd142a70364eb0219ded72e16cd, type: 3}
+    hotspot: {x: 50, y: 0}
+  maxNavMashProjectionDistance: 1
+  cursorBlinkTime: 0.3
+  MaxNavMeshPathLength: 40
 --- !u!1001 &1600198951326756990
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -268,6 +290,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450759077856878145, guid: 0e0a4aa5ae01e1b4c859c277690dbe4a,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0e0a4aa5ae01e1b4c859c277690dbe4a, type: 3}

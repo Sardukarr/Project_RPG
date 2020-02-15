@@ -1,5 +1,6 @@
-﻿using RPG.Resources;
+﻿using RPG.Attributes;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace RPG.Combat
 {
@@ -11,10 +12,15 @@ namespace RPG.Combat
         [SerializeField] GameObject impactFX = null;
         [SerializeField] GameObject[] destroyOnHit = null;
         [SerializeField] float lifeAfterImpact = 0.05f;
-
+        [SerializeField] UnityEvent onHit = null;
+        [SerializeField] UnityEvent onLaunch = null;
         bool homing = false;
         GameObject instigator=null;
         // Update is called once per frame
+        private void Awake()
+        {
+            onLaunch.Invoke();
+        }
         void Update()
         {
             if (target == null) return;
@@ -49,13 +55,15 @@ namespace RPG.Combat
                 if (!ColiderHealth.IsDead())
                 {
                 ColiderHealth.TakeDamage(instigator,damage); // targer.takedamage
+                onHit.Invoke();
                 }
                 else return;
             }
             if (impactFX != null)
             {
                 GameObject impact = Instantiate(impactFX, other.GetComponent<Transform>().position, transform.rotation);
-              //  Destroy(impact, 2f);
+                
+                //  Destroy(impact, 2f);
             }
             foreach (GameObject toDestroy in destroyOnHit)
             {

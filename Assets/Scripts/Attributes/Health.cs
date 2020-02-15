@@ -3,18 +3,25 @@ using RPG.Core;
 using RPG.Saving;
 using RPG.Stats;
 using System;
-using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
-namespace RPG.Resources
+namespace RPG.Attributes
 {
     public class Health : MonoBehaviour, ISaveable
     {
+        [SerializeField] TakeDamageEvent takeDamage;
+        [SerializeField] UnityEvent onDie;
         //lazy value would be initialize before first use;
         LazyValue<float> healthPoints;
         LazyValue<float> maxHealthPoints;
         public bool alreadyDead = false;
         BaseStats baseStats;
+
+        // magic to make unity see serializable field takeDamage
+        [Serializable]
+        public class TakeDamageEvent: UnityEvent<float>
+        { }
 
         private void Awake()
         {
@@ -62,21 +69,24 @@ namespace RPG.Resources
 
         public void TakeDamage(GameObject instigator, float damage)
         {
-            print(gameObject.name + "took: " + damage);
             healthPoints.value = Mathf.Max(healthPoints.value - damage, 0);
+            // GetComponentInChildren<DamageTextSpawner>().Spawn(damage);
+
             if (healthPoints.value == 0 && !alreadyDead)
             {
                 Die(instigator);
+                onDie.Invoke();
             }
             else
             {
+                takeDamage.Invoke(damage);
                 //GetComponent<Animator>().st
                 GetComponent<Animator>().SetTrigger("getHit");
             }
         }
-        public float GetPercent()
+        public float GetHealthFraction()
         {
-            return 100 * healthPoints.value / baseStats.GetStat(Stat.HP);
+            return healthPoints.value / baseStats.GetStat(Stat.HP);
         }
         public Tuple<float, float> GetCurrentAndMaxHealth()
         {

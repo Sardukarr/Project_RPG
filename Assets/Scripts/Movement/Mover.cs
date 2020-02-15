@@ -3,17 +3,20 @@ using UnityEngine;
 using UnityEngine.AI;
 using RPG.Saving;
 using System.Collections.Generic;
-using RPG.Resources;
+using RPG.Attributes;
+using System;
+using RPG.Enviroment;
 
 namespace RPG.Movement
 {
+
     public class Mover : MonoBehaviour, IAction, ISaveable
     {
+        
         [SerializeField] float maxSpeed=6f;
         NavMeshAgent myAgent;
         ActionScheduler actionScheduler;
         Health myHealth;
-
 
         void Start()
         {
@@ -21,7 +24,6 @@ namespace RPG.Movement
             actionScheduler = GetComponent<ActionScheduler>();
             myHealth = GetComponent<Health>();
         }
-
         void Update()
         {
             myAgent.enabled = !myHealth.IsDead();
@@ -54,9 +56,12 @@ namespace RPG.Movement
         public void MoveWithinRange(Vector3 destination, float distance)
         {
             myAgent.SetDestination(destination);
+            actionScheduler.StartAction(this);
             var remainingDistance = Vector3.Distance(transform.position, destination);
             if (remainingDistance <= distance)
-                Cancel();      
+            {
+                actionScheduler.CancelAction();
+            }
             else
             {
                 myAgent.isStopped = false;

@@ -12,6 +12,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Eq Club
       objectReference: {fileID: 0}
+    - target: {fileID: 7146626686240867106, guid: f10b8faf546d7c847bd3511124b8ebaf,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7191975572505008918, guid: f10b8faf546d7c847bd3511124b8ebaf,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -25,7 +30,7 @@ PrefabInstance:
     - target: {fileID: 7191975572505008918, guid: f10b8faf546d7c847bd3511124b8ebaf,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.912
+      value: 0.247
       objectReference: {fileID: 0}
     - target: {fileID: 7191975572505008918, guid: f10b8faf546d7c847bd3511124b8ebaf,
         type: 3}
@@ -165,6 +170,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Radius
       value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2896596855524554142, guid: 65dd71f3cecfa3049bc4b4ac502f54b4,
+        type: 3}
+      propertyPath: m_Center.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6670720568860876039, guid: 65dd71f3cecfa3049bc4b4ac502f54b4,
         type: 3}

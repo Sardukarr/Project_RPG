@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using System;
 using RPG.Combat;
 
-namespace RPG.Resources
+namespace RPG.Attributes
 {
     public class EnamyHealthDisplay : MonoBehaviour
     {
