@@ -3081,6 +3081,21 @@ PrefabInstance:
       propertyPath: level
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3825392057812892831, guid: d6ea69ea5e93ef84da0dc4e0cfa24cd6,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3825392057812892831, guid: d6ea69ea5e93ef84da0dc4e0cfa24cd6,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3825392057812892831, guid: d6ea69ea5e93ef84da0dc4e0cfa24cd6,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4129121621448459556, guid: d6ea69ea5e93ef84da0dc4e0cfa24cd6,
         type: 3}
       propertyPath: defaultWeapon

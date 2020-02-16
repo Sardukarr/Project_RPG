@@ -159,6 +159,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Eq Bow
       objectReference: {fileID: 0}
+    - target: {fileID: 8890937592787252948, guid: 834d8282bb3521249ad46c57baffd447,
+        type: 3}
+      propertyPath: audioClips.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 834d8282bb3521249ad46c57baffd447, type: 3}
 --- !u!4 &3924208731794497884 stripped

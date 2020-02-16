@@ -49,6 +49,11 @@ namespace RPG.Control
         void Update()
         {
             TimeSinceMovementCursorChange += Time.deltaTime;
+
+            // TODO: temporary quit
+            if (Input.GetKey(KeyCode.Escape)) 
+                Application.Quit();
+
             //SetCursor(CursorType.none);
             if (interactWithUI())
               {
