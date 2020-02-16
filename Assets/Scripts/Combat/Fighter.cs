@@ -19,35 +19,34 @@ namespace RPG.Combat
         [SerializeField] WeaponConfig defaultWeapon = null;
        // [SerializeField] string defaultWeaponName = "Unarmed";
         private float  TimeSinceLastAttack = 0f;
-
         private Health target = null;
         private ActionScheduler actionScheduler = null;
         private Mover mover = null;
         //TODO:: animation has to be for comercial use
         private Animator animator = null;
         private BaseStats baseStats = null;
-
-        LazyValue<WeaponConfig> currentWeaponConfig=null;
-        Weapon currentWeapon = null;
+        WeaponConfig currentWeaponConfig= null;
+        LazyValue<Weapon> currentWeapon = null;
         private void Awake()
         {
             actionScheduler = GetComponent<ActionScheduler>();
             mover = GetComponent<Mover>();
             animator = GetComponent<Animator>();
             baseStats = GetComponent<BaseStats>();
-            currentWeaponConfig = new LazyValue<WeaponConfig>(SetupDefaultWeapon);
+            currentWeaponConfig = defaultWeapon;
+            currentWeapon = new LazyValue<Weapon>(SetupDefaultWeapon);
 
         }
 
-        private WeaponConfig SetupDefaultWeapon()
+        private Weapon SetupDefaultWeapon()
         {
-            AttachWeapon(defaultWeapon);
-            return defaultWeapon;
+
+            return AttachWeapon(defaultWeapon); 
         }
 
         private void Start()
         {
-            currentWeaponConfig.ForceInit();
+            currentWeapon.ForceInit();
             
         }
         public bool hasValidTarget()
@@ -74,24 +73,24 @@ namespace RPG.Combat
         public void EquipWeapon(WeaponConfig weapon)
         {
             if (weapon == null) return;
-            currentWeaponConfig.value = weapon;
-            weapon.Spawn(rightHandTransform, leftHandTransform, animator);
+            currentWeaponConfig = weapon;
+            currentWeapon.value = weapon.Spawn(rightHandTransform, leftHandTransform, animator);
             // Race condition, used in start and restore state, can not use local stashed animator
-            animator.SetFloat("attackSpeedMultiplayer", currentWeaponConfig.value.GetAnimationSpeed()); 
+            animator.SetFloat("attackSpeedMultiplayer", currentWeaponConfig.GetAnimationSpeed()); 
 
         }
-        private void AttachWeapon(WeaponConfig weapon)
+        private Weapon AttachWeapon(WeaponConfig weapon)
         {
-            if (weapon == null) return;
-            currentWeaponConfig.value = weapon;
-            weapon.Spawn(rightHandTransform, leftHandTransform, animator);
-            animator.SetFloat("attackSpeedMultiplayer", currentWeaponConfig.value.GetAnimationSpeed());
-
+            if (weapon == null) return null;
+            currentWeaponConfig = weapon;
+            currentWeapon.value = weapon.Spawn(rightHandTransform, leftHandTransform, animator);
+            animator.SetFloat("attackSpeedMultiplayer", currentWeaponConfig.GetAnimationSpeed());
+            return currentWeapon.value;
         }
         private void AttackBehavior()
         {
             transform.LookAt(target.transform);
-        if (TimeSinceLastAttack >= currentWeaponConfig.value.TimeBetweenAttacks && !target.IsDead())
+        if (TimeSinceLastAttack >= currentWeaponConfig.TimeBetweenAttacks && !target.IsDead())
             {
                 animator.ResetTrigger("stopAttack");
                 animator.SetTrigger("attack");
@@ -102,7 +101,7 @@ namespace RPG.Combat
 
         private bool IsInRange()
         {
-            return target != null && (Vector3.Distance(transform.position, target.transform.position) <= currentWeaponConfig.value.Range);
+            return target != null && (Vector3.Distance(transform.position, target.transform.position) <= currentWeaponConfig.Range);
         }
         public void Attack(GameObject combatTarget)
         {
@@ -132,27 +131,34 @@ namespace RPG.Combat
             mover.Cancel();
             target = null;
         }
-        //Animation Events
+        //Animation Event
          private void Hit ()
         {
-            if (currentWeaponConfig.value.HasProjectile())
-                Shoot();
+            if (currentWeapon.value != null)
+                currentWeapon.value.OnHit();
+            if (currentWeaponConfig.HasProjectile())
+                LaunchProjectile();
             else if (target != null & IsInRange())
                 //          target.TakeDamage(gameObject, currentWeapon.Damage);
                 target.TakeDamage(gameObject, (float)baseStats.GetStat(Stat.BaseDmg));//+currentWeapon.Damage);
         }
-        private void Shoot ()
+        //Animation Event
+        void Shoot()
+        {
+            Hit();
+        }
+        private void LaunchProjectile ()
         {
             if (target == null) return; //|| !IsInRange()) return;
 
-            currentWeaponConfig.value.LaunchProjectile(rightHandTransform, leftHandTransform, target, gameObject, (float)baseStats.GetStat(Stat.BaseDmg)); //+ currentWeapon.Damage);
+            currentWeaponConfig.LaunchProjectile(rightHandTransform, leftHandTransform, target, gameObject, (float)baseStats.GetStat(Stat.BaseDmg)); //+ currentWeapon.Damage);
             //Hit();
         }
 
         public object CaptureState()
         {
             if (currentWeaponConfig != null)
-                return currentWeaponConfig.value.name;
+                return currentWeaponConfig.name;
             else return defaultWeapon.name;
         }
 
@@ -169,7 +175,7 @@ namespace RPG.Combat
             //TODO: should dmg be int?
             if(stat == Stat.BaseDmg)
             {
-                yield return currentWeaponConfig.value.Damage;
+                yield return currentWeaponConfig.Damage;
             }
         }
 
@@ -177,7 +183,7 @@ namespace RPG.Combat
         {
             if (stat == Stat.BaseDmg)
             {
-                yield return currentWeaponConfig.value.PercentageModifier;
+                yield return currentWeaponConfig.PercentageModifier;
             }
         }
     }

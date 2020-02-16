@@ -11,6 +11,7 @@ namespace RPG.Enviroment
 public class WeaponPickup : MonoBehaviour, IRaycastable
 {
         [SerializeField] WeaponConfig weapon = null;
+        [SerializeField] float healEffect = 0f;
         [SerializeField] float respawnTime = 5f;
         [SerializeField] float maxDistanceToPickUp = 3f;
 
@@ -25,7 +26,9 @@ public class WeaponPickup : MonoBehaviour, IRaycastable
         }
         private void PickItUp(Fighter fighter)
         {
-            fighter.EquipWeapon(weapon);
+            if(weapon != null)
+                fighter.EquipWeapon(weapon);
+            fighter.GetComponent<RPG.Attributes.Health>().Heal(healEffect);
             StartCoroutine(HideForSeconds(respawnTime));
         }
 

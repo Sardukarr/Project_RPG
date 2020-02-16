@@ -20,7 +20,7 @@ namespace RPG.Core
         {
             if (!GetComponent<AudioSource>().isPlaying)
             {
-                int value = UnityEngine.Random.Range(0, audioClips.Length - 1);
+                int value = UnityEngine.Random.Range(0, audioClips.Length-1);
                 var audioSource = GetComponent<AudioSource>();
                 audioSource.clip = audioClips[value];
                 audioSource.pitch = UnityEngine.Random.Range(Range.Item1, Range.Item2);

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c027ed7daff8d849aac2b43d992c368, type: 3}
   m_Name: Club
   m_EditorClassIdentifier: 
-  equippedPrefab: {fileID: 4058620696701758620, guid: f10b8faf546d7c847bd3511124b8ebaf,
+  equippedPrefab: {fileID: 2529618882301403524, guid: d50b61c6fc209744abade563e4e4b799,
     type: 3}
   AnimatorOverride: {fileID: 22100000, guid: 2d7c5df354512a244ab3754d1b35e026, type: 2}
   range: 1.2

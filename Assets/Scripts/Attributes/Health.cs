@@ -84,6 +84,11 @@ namespace RPG.Attributes
                 GetComponent<Animator>().SetTrigger("getHit");
             }
         }
+
+        public void Heal(float points)
+        {
+            healthPoints.value = Mathf.Clamp(healthPoints.value+points, 0f,maxHealthPoints.value);
+        }
         public float GetHealthFraction()
         {
             return healthPoints.value / baseStats.GetStat(Stat.HP);
