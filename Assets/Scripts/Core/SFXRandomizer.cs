@@ -12,22 +12,28 @@ namespace RPG.Core
         [SerializeField] Tuple<float, float> Range = new Tuple<float, float>(0.9f,1.1f);
         float TimeSinceLastChange = 10f;
         float HowOffenChange = 2f;
+        AudioSource myAudioSource = null;
+
+        private void Awake()
+        {
+            myAudioSource = GetComponent<AudioSource>();
+        }
         private void Update()
         {
            // TimeSinceLastChange += Time.deltaTime;
         }
         public void RandomizeAndPlay()
         {
-            if (!GetComponent<AudioSource>().isPlaying)
+            if (myAudioSource!=null && !myAudioSource.isPlaying)
             {
                
                 if(audioClips.Length >0)
                 {
                     int value = UnityEngine.Random.Range(0, audioClips.Length - 1);
-                    var audioSource = GetComponent<AudioSource>();
-                    audioSource.clip = audioClips[value];
-                    audioSource.pitch = UnityEngine.Random.Range(Range.Item1, Range.Item2);
-                    audioSource.Play();
+
+                    myAudioSource.clip = audioClips[value];
+                    myAudioSource.pitch = UnityEngine.Random.Range(Range.Item1, Range.Item2);
+                    myAudioSource.Play();
                 }
             }
         }

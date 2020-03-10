@@ -7,6 +7,7 @@ using RPG.Stats;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using GameDevTV.Inventories;
 
 namespace RPG.Combat
 {
@@ -27,6 +28,9 @@ namespace RPG.Combat
         private BaseStats baseStats = null;
         WeaponConfig currentWeaponConfig= null;
         LazyValue<Weapon> currentWeapon = null;
+
+        Equipment equipment=null;
+
         private void Awake()
         {
             actionScheduler = GetComponent<ActionScheduler>();
@@ -35,6 +39,11 @@ namespace RPG.Combat
             baseStats = GetComponent<BaseStats>();
             currentWeaponConfig = defaultWeapon;
             currentWeapon = new LazyValue<Weapon>(SetupDefaultWeapon);
+            equipment = GetComponent<Equipment>();
+            if (equipment)
+            {
+                equipment.equipmentUpdated += UpdateWeapon;
+            }
 
         }
 
@@ -87,6 +96,18 @@ namespace RPG.Combat
             animator.SetFloat("attackSpeedMultiplayer", currentWeaponConfig.GetAnimationSpeed());
             return currentWeapon.value;
         }
+        private void UpdateWeapon()
+        {
+            var weapon = equipment.GetItemInSlot(EquipLocation.Weapon) as WeaponConfig;
+            if (weapon == null)
+            {
+                EquipWeapon(defaultWeapon);
+            }
+            else
+            {
+                EquipWeapon(weapon);
+            }
+        }
         private void AttackBehavior()
         {
             transform.LookAt(target.transform);
@@ -115,9 +136,14 @@ namespace RPG.Combat
         }
         public bool CanAttack(GameObject combatTarget)
         {
-            return combatTarget != null && 
-                    combatTarget.GetComponent<Health>()!=null &&
-                    !combatTarget.GetComponent<Health>().IsDead();
+           // if (combatTarget == null) return false;
+           // if (!mover.CanMoveTo(combatTarget.transform.position)) return false;
+            var targetHealth = combatTarget.GetComponent<Health>();
+            return combatTarget != null &&
+                    targetHealth != null &&
+                    !targetHealth.IsDead() &&
+                    (mover.CanMoveTo(combatTarget.transform.position) || currentWeaponConfig.HasProjectile())
+                    ;
         }
 
         public Health GetTarget()
@@ -170,7 +196,7 @@ namespace RPG.Combat
             EquipWeapon(weapon);
         }
 
-        public IEnumerable<float> GetAdditiveModifier(Stat stat)
+        public IEnumerable<float> GetAdditiveModifiers(Stat stat)
         {
             //TODO: should dmg be int?
             if(stat == Stat.BaseDmg)
@@ -179,7 +205,7 @@ namespace RPG.Combat
             }
         }
 
-        public IEnumerable<float> GetPercentageModifier(Stat stat)
+        public IEnumerable<float> GetPercentageModifiers(Stat stat)
         {
             if (stat == Stat.BaseDmg)
             {

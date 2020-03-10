@@ -39,9 +39,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chaseDistance: 5
+  shoutDistance: 4
   SuspecionTime: 5
   waypointDwellTime: 5
   waypointTolerance: 1.2
+  AggrevatedTime: 10
   patrolSpeedFraction: 0.2
   myPatrolPath: {fileID: 0}
 --- !u!1001 &2466034249759971842
@@ -127,8 +129,38 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 30561821648372709, guid: 0e0a4aa5ae01e1b4c859c277690dbe4a,
         type: 3}
+      propertyPath: takeDamage.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 30561821648372709, guid: 0e0a4aa5ae01e1b4c859c277690dbe4a,
+        type: 3}
       propertyPath: healthPoints
       value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 30561821648372709, guid: 0e0a4aa5ae01e1b4c859c277690dbe4a,
+        type: 3}
+      propertyPath: takeDamage.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 30561821648372709, guid: 0e0a4aa5ae01e1b4c859c277690dbe4a,
+        type: 3}
+      propertyPath: takeDamage.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 30561821648372709, guid: 0e0a4aa5ae01e1b4c859c277690dbe4a,
+        type: 3}
+      propertyPath: takeDamage.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 2051765527203485949}
+    - target: {fileID: 30561821648372709, guid: 0e0a4aa5ae01e1b4c859c277690dbe4a,
+        type: 3}
+      propertyPath: takeDamage.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: TurnAggressionOn
+      objectReference: {fileID: 0}
+    - target: {fileID: 30561821648372709, guid: 0e0a4aa5ae01e1b4c859c277690dbe4a,
+        type: 3}
+      propertyPath: takeDamage.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 812007967410156474, guid: 0e0a4aa5ae01e1b4c859c277690dbe4a,
         type: 3}
@@ -216,6 +248,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Enamy
+      objectReference: {fileID: 0}
+    - target: {fileID: 4449518821502635049, guid: 0e0a4aa5ae01e1b4c859c277690dbe4a,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0e0a4aa5ae01e1b4c859c277690dbe4a, type: 3}

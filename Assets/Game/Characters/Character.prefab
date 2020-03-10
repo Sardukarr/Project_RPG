@@ -177,6 +177,7 @@ GameObject:
   - component: {fileID: 1804016789268167895}
   - component: {fileID: 114417781872690946}
   - component: {fileID: 114534916555770524}
+  - component: {fileID: 7049299314294152577}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -254,6 +255,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxSpeed: 6
+  MaxNavMeshPathLength: 40
 --- !u!114 &812007967410156474
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -376,6 +378,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   XP: 0
+--- !u!114 &7049299314294152577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3515886669068673623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b860afea1bfe51468397556e9bb6ffa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scatterDistance: 1
+  dropLibrary: {fileID: 11400000, guid: 987498ea774d33848930b3834e7c76fe, type: 2}
 --- !u!1 &3933969524422604456
 GameObject:
   m_ObjectHideFlags: 0

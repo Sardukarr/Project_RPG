@@ -12,6 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c027ed7daff8d849aac2b43d992c368, type: 3}
   m_Name: Club
   m_EditorClassIdentifier: 
+  itemID: 75828efe-8bbe-45ea-92fe-e92bff642875
+  displayName: 
+  description: Club
+  icon: {fileID: 21300000, guid: 9415af11d73bb804c8d24343e1351132, type: 3}
+  pickup: {fileID: 4663899972541805931, guid: 07da1ab69e45133458f3461bb1bbd280, type: 3}
+  stackable: 0
+  allowedEquipLocation: 5
   equippedPrefab: {fileID: 2529618882301403524, guid: d50b61c6fc209744abade563e4e4b799,
     type: 3}
   AnimatorOverride: {fileID: 22100000, guid: 2d7c5df354512a244ab3754d1b35e026, type: 2}

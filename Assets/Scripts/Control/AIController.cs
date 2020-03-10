@@ -11,13 +11,15 @@ namespace RPG.Control
     public class AIController : MonoBehaviour
     {
         [SerializeField] float chaseDistance = 5f;
+        [SerializeField] float shoutDistance = 8f;
         [SerializeField] float SuspecionTime = 5f;
         [SerializeField] float waypointDwellTime = 5f;
         [SerializeField] float waypointTolerance = 1.2f;
+        [SerializeField] float AggrevatedTime = 10f;
         [Range(0,1)][SerializeField] float patrolSpeedFraction = 0.2f;
         [SerializeField] PatrolPath myPatrolPath=null;
 
-
+        private float timeSinceAggrevated = Mathf.Infinity;
         private float timeSincePlayerSpotted = Mathf.Infinity;
         private float timeSinceArrivedOnWaypoint = Mathf.Infinity;
 
@@ -57,7 +59,7 @@ namespace RPG.Control
             if (myHealth.IsDead())
                 return;
             UpdateTimers();
-            if (DistanceToPlayer() <= chaseDistance && myFighter.CanAttack(player))
+            if (IsAggrevated() )
             {
                 AttackBehaviour();
 
@@ -76,6 +78,10 @@ namespace RPG.Control
 
         }
 
+        public void TurnAggressionOn()
+        {
+            timeSinceAggrevated = 0f;
+        }
         private void GuardBehaviour()
         {
             mySchedule.CancelAction();
@@ -93,7 +99,21 @@ namespace RPG.Control
             timeSincePlayerSpotted = 0;
           //  myAgent.speed = RunToPlayerSpeed;
             myFighter.Attack(player);
+            AggrivateNearbyEnamies();
         }
+        private void AggrivateNearbyEnamies()
+        {
+            var hits =Physics.SphereCastAll(transform.position, shoutDistance, Vector3.up, 0f);
+            foreach (var hit in hits)
+            {
+               var fellowEnamy = hit.transform.GetComponent<AIController>();
+                if(fellowEnamy!=null)
+                {
+                    fellowEnamy.TurnAggressionOn();
+                }
+            }
+        }
+        
 
         private void PatrolBehaviour()
         {
@@ -104,7 +124,7 @@ namespace RPG.Control
                 CycleWaypoint();
             }
             Vector3 desiredPosition = GetCurrentWaypoint();
-            if(waypointDwellTime<timeSinceArrivedOnWaypoint)
+            if(waypointDwellTime < timeSinceArrivedOnWaypoint)
                 myMover.StartMoveAction(desiredPosition, patrolSpeedFraction);
 
         }
@@ -128,10 +148,14 @@ namespace RPG.Control
         {
             timeSincePlayerSpotted += Time.deltaTime;
             timeSinceArrivedOnWaypoint += Time.deltaTime;
+            timeSinceAggrevated += Time.deltaTime;
         }
-        private float DistanceToPlayer()
+        private bool IsAggrevated()
         {
-            return Vector3.Distance(player.transform.position, transform.position);
+            float distance = Vector3.Distance(player.transform.position, transform.position);
+            
+            return ((distance <= chaseDistance ) || (timeSinceAggrevated < AggrevatedTime)) &&
+                  myFighter.CanAttack(player);
         }
 
         //called by unity editor

@@ -100,7 +100,7 @@ namespace RPG.Stats
             float total = 0;
           foreach(var provider in GetComponents<IModifierProvider>())
             {
-                foreach(var modifier in provider.GetAdditiveModifier(stat))
+                foreach(var modifier in provider.GetAdditiveModifiers(stat))
                 {
                     total += modifier;
                 }
@@ -112,7 +112,7 @@ namespace RPG.Stats
             float total = 0;
             foreach (var provider in GetComponents<IModifierProvider>())
             {
-                foreach (var modifier in provider.GetPercentageModifier(stat))
+                foreach (var modifier in provider.GetPercentageModifiers(stat))
                 {
                     total += modifier;
                 }

@@ -5,9 +5,8 @@ using UnityEngine;
 namespace RPG.Stats
 {
     public interface IModifierProvider
-    {
-        IEnumerable<float> GetAdditiveModifier(Stat stat);
-
-        IEnumerable<float> GetPercentageModifier(Stat stat);
+    {               
+        IEnumerable<float> GetAdditiveModifiers(Stat stat);     
+IEnumerable<float> GetPercentageModifiers(Stat stat);
     }
 }

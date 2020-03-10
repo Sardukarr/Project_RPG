@@ -14,6 +14,7 @@ namespace RPG.Movement
     {
         
         [SerializeField] float maxSpeed=6f;
+        [SerializeField] float MaxNavMeshPathLength = 40f;
         NavMeshAgent myAgent;
         ActionScheduler actionScheduler;
         Health myHealth;
@@ -42,6 +43,20 @@ namespace RPG.Movement
             actionScheduler.StartAction(this);
             MoveTo(destination, speedFraction);
         }
+
+        public bool CanMoveTo(Vector3 destination)
+        {
+          //  target = navMeshHit.position;
+            NavMeshPath path = new NavMeshPath();
+            bool hasPath = NavMesh.CalculatePath(transform.position, destination, NavMesh.AllAreas, path);
+
+            if (!hasPath) return false;
+            if (path.status != NavMeshPathStatus.PathComplete) return false;
+            if (GetPathLength(path) > MaxNavMeshPathLength) return false;
+
+            return true;
+        }
+       
         public void Cancel()
         {
             myAgent.isStopped = true;
@@ -68,7 +83,18 @@ namespace RPG.Movement
             }
 
         }
-
+        private float GetPathLength(NavMeshPath path)
+        {
+            Vector3 lastCorner = transform.position;
+            float Distance = 0f;
+            for (int i = 0; i < path.corners.Length; i++)
+            {
+                Distance += Vector3.Distance(lastCorner, path.corners[i]);
+                lastCorner = path.corners[i];
+            }
+            //  print(Distance);      
+            return Distance;
+        }
         public object CaptureState()
         {
             Dictionary<string, object> data = new Dictionary<string, object>();

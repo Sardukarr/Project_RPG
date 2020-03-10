@@ -183,6 +183,51 @@ PrefabInstance:
       propertyPath: m_Name
       value: Eq Club
       objectReference: {fileID: 0}
+    - target: {fileID: 8890937592787252948, guid: 834d8282bb3521249ad46c57baffd447,
+        type: 3}
+      propertyPath: audioClips.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8890937592787252948, guid: 834d8282bb3521249ad46c57baffd447,
+        type: 3}
+      propertyPath: audioClips.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: a864d0de9e0f858479f019b7ae521250, type: 3}
+    - target: {fileID: 8890937592787252948, guid: 834d8282bb3521249ad46c57baffd447,
+        type: 3}
+      propertyPath: audioClips.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 06d0d7538b15a3c41ab3d752f6eea485, type: 3}
+    - target: {fileID: 8890937592787252948, guid: 834d8282bb3521249ad46c57baffd447,
+        type: 3}
+      propertyPath: audioClips.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: 523fcf714d123cd41aaf9f5b60affcfd, type: 3}
+    - target: {fileID: 8890937592787252948, guid: 834d8282bb3521249ad46c57baffd447,
+        type: 3}
+      propertyPath: audioClips.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: 428ec5e69465b0c4f8d486a5e20b7a5d, type: 3}
+    - target: {fileID: 8890937592787252948, guid: 834d8282bb3521249ad46c57baffd447,
+        type: 3}
+      propertyPath: audioClips.Array.data[4]
+      value: 
+      objectReference: {fileID: 8300000, guid: 7e0f8857875325446b1fe7bc6fe7074b, type: 3}
+    - target: {fileID: 8890937592787252948, guid: 834d8282bb3521249ad46c57baffd447,
+        type: 3}
+      propertyPath: audioClips.Array.data[5]
+      value: 
+      objectReference: {fileID: 8300000, guid: 97e9f0c2fd859e845b55564644aefc62, type: 3}
+    - target: {fileID: 8890937592787252948, guid: 834d8282bb3521249ad46c57baffd447,
+        type: 3}
+      propertyPath: audioClips.Array.data[6]
+      value: 
+      objectReference: {fileID: 8300000, guid: 1af20abe73684ed4e973dddc59a4b393, type: 3}
+    - target: {fileID: 8890937592787252948, guid: 834d8282bb3521249ad46c57baffd447,
+        type: 3}
+      propertyPath: audioClips.Array.data[7]
+      value: 
+      objectReference: {fileID: 8300000, guid: 55248fafca817f644ae5a3115e233979, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 834d8282bb3521249ad46c57baffd447, type: 3}
 --- !u!4 &7705350063015348056 stripped

@@ -22,14 +22,16 @@ namespace RPG.Control
 
         [SerializeField] CursorMapping[] cursorMappings = null;
         [SerializeField] float maxNavMashProjectionDistance = 1f;
-        [SerializeField] float cursorBlinkTime=1f;
-        [SerializeField] float MaxNavMeshPathLength = 40f;
+        [SerializeField] float cursorBlinkTime = 1f;
+        [SerializeField] float reycastRadius = 1f;
 
 
-       // public delegate void OnDistancePickupClick(Vector3 position, float distance);
-       // OnDistancePickupClick onDistancePickupClick;
+        // public delegate void OnDistancePickupClick(Vector3 position, float distance);
+        // OnDistancePickupClick onDistancePickupClick;
 
         float TimeSinceMovementCursorChange = 0f;
+        bool isDraggingOverUI = false;
+
         private CursorType currenMovmentCursor= CursorType.movement;
         Mover myMover;
         Fighter myFighter;
@@ -102,7 +104,9 @@ namespace RPG.Control
             Vector3 target;
             bool hasHit = RaycastNavMesh(out target);
             if (!hasHit) return false;
-                if (Input.GetMouseButton(0))
+
+            if (!myMover.CanMoveTo(target)) return false;
+            if (Input.GetMouseButton(0))
                 {
                 myMover.StartMoveAction(target, 1f);
                   
@@ -119,7 +123,24 @@ namespace RPG.Control
         }
         private bool interactWithUI()
         {
-            return EventSystem.current.IsPointerOverGameObject();
+            if (Input.GetMouseButtonUp(0))
+            {
+                isDraggingOverUI = false;
+            }
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    isDraggingOverUI = true;
+                }
+                SetCursor(CursorType.UI);
+                return true;
+            }
+            if (isDraggingOverUI)
+            {
+                return true;
+            }
+            return false;
         }
         private bool RaycastNavMesh(out Vector3 target) 
         {
@@ -137,12 +158,12 @@ namespace RPG.Control
             if (!hasCastToNavMesh) return false;
             target = navMeshHit.position;
 
-            NavMeshPath path = new NavMeshPath();
-            bool hasPath = NavMesh.CalculatePath(transform.position, target, NavMesh.AllAreas, path);
+            //NavMeshPath path = new NavMeshPath();
+            //bool hasPath = NavMesh.CalculatePath(transform.position, target, NavMesh.AllAreas, path);
 
-            if (!hasPath) return false;
-            if (path.status!=NavMeshPathStatus.PathComplete) return false;
-            if (GetPathLength(path) > MaxNavMeshPathLength) return false;
+            //if (!hasPath) return false;
+            //if (path.status!=NavMeshPathStatus.PathComplete) return false;
+            //if (GetPathLength(path) > MaxNavMeshPathLength) return false;
 
             return true;
         }
@@ -150,18 +171,7 @@ namespace RPG.Control
         {
             myMover.MoveWithinRange(position, maxDistanceToPickUp);
         }
-        private float GetPathLength(NavMeshPath path)
-        {
-            Vector3 lastCorner = transform.position;
-            float Distance = 0f;
-            for (int i = 0; i < path.corners.Length; i++)
-            {
-                Distance +=Vector3.Distance(lastCorner, path.corners[i]);
-                lastCorner = path.corners[i];
-            }
-          //  print(Distance);      
-            return Distance;
-        }
+      
 
         private static Ray GetMauseRey()
         {
@@ -170,7 +180,7 @@ namespace RPG.Control
 
         RaycastHit[] RayCastAllSort()
         {
-             var hits = Physics.RaycastAll(GetMauseRey());
+            var hits = Physics.SphereCastAll(GetMauseRey(),reycastRadius);
             float[] distances = new float[hits.Length];
             for (int i = 0; i < distances.Length; i++)
             {
