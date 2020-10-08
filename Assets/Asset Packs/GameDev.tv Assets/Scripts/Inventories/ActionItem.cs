@@ -19,6 +19,8 @@ namespace GameDevTV.Inventories
 
         // PUBLIC
 
+            // TODO action item is not saved when in inventory
+
         /// <summary>
         /// Trigger the use of this item. Override to provide functionality.
         /// </summary>

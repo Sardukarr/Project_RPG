@@ -8,6 +8,7 @@ namespace RPG.Control
     [RequireComponent(typeof(Pickup))]
     public class ClickablePickup : MonoBehaviour, IRaycastable
     {
+        [SerializeField] float pickupDistance = 1f;
         Pickup pickup;
 
         private void Awake()
@@ -29,11 +30,19 @@ namespace RPG.Control
 
         public bool HandleRaycast(PlayerController callingController)
         {
-            if (Input.GetMouseButtonDown(0))
+            float distance = Vector3.Distance(GetComponent<Transform>().position,
+                                    callingController.GetComponent<Transform>().position);
+            Debug.Log(distance);
+            if (distance < pickupDistance)
             {
-                pickup.PickupItem();
+                if (Input.GetMouseButtonDown(0))
+                {
+                    pickup.PickupItem();
+                }
+                return true;
             }
-            return true;
+            return false;
         }
+    
     }
 }

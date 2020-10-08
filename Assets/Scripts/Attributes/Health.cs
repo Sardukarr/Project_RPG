@@ -100,6 +100,7 @@ namespace RPG.Attributes
         private void Die(GameObject instigator)
         {
             // if (alreadyDead) return;
+            GetComponent<CapsuleCollider>().enabled = false;
             GetComponent<Animator>().SetTrigger("die");
             GetComponent<ActionScheduler>().CancelAction();
             alreadyDead = true;
